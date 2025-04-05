@@ -9,19 +9,19 @@ namespace OOP_Project
 {
     public class Package
     {
-        int id;
-        User sender;
-        User receiver;
-        string status;
-        float weight;
-        int cost;
-        bool isDockument;
+        public int id { get; set; }
+        public int senderId { get; set; }
+        public int receiverId { get; set; }
+        public string status { get; set; }
+        public float weight { get; set; }
+        public int cost { get; set; }
+        public bool isDockument { get; set; }
 
-        public Package(int id, User sender, User receiver, string status, float weight, int cost, bool isDockument)
+        public Package(int id, int senderId, int receiverId, string status, float weight, int cost, bool isDockument)
         {
             this.id = id;
-            this.sender = sender;
-            this.receiver = receiver;
+            this.senderId = senderId;
+            this.receiverId = receiverId;
             this.status = status;
             this.weight = weight;
             this.cost = cost;

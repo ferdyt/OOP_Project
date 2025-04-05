@@ -1,0 +1,11 @@
+[
+  {
+    "id": 1,
+    "senderId": 1,
+    "receiverId": 2,
+    "status": "\u0432 \u0434\u043E\u0440\u043E\u0437\u0456",
+    "weight": 12,
+    "cost": 1450,
+    "isDockument": false
+  }
+]

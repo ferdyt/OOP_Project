@@ -8,8 +8,8 @@ namespace OOP_Project
 {
     public class User
     {
-        int id;
-        string login;
+        public int id { get; }
+        public string login { get; }
 
         public User(int id, string login)
         {
