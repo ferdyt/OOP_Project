@@ -16,6 +16,16 @@ namespace UnitTests
         }
 
         [TestMethod]
+        public void databaseDelUser()
+        {
+            User user = new(1, "Julian");
+
+            bool res = DatabaseManager.DelUser(user);
+
+            Assert.IsTrue(res);
+        }
+
+        [TestMethod]
         public void databaseAddPackage()
         {
             User sender = new(1, "Julian");
