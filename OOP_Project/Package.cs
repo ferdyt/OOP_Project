@@ -9,15 +9,15 @@ namespace OOP_Project
 {
     public class Package
     {
-        public int id { get; set; }
-        public int senderId { get; set; }
-        public int receiverId { get; set; }
-        public string status { get; set; }
-        public float weight { get; set; }
-        public int cost { get; set; }
-        public bool isDockument { get; set; }
+        public Guid id { get;}
+        public Guid senderId { get; }
+        public Guid receiverId { get; }
+        public string status { get; }
+        public float weight { get; }
+        public int cost { get; }
+        public bool isDockument { get; }
 
-        public Package(int id, int senderId, int receiverId, string status, float weight, int cost, bool isDockument)
+        public Package(Guid id, Guid senderId, Guid receiverId, string status, float weight, int cost, bool isDockument)
         {
             this.id = id;
             this.senderId = senderId;

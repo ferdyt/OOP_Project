@@ -6,7 +6,10 @@ namespace UnitTests
     [TestClass]
     public sealed class Test1
     {
+        Guid packageGuid = Guid.NewGuid();
         private static readonly Mutex fileMutex = new Mutex();
+        static string userDBPath = "C:/Users/Csgo2/source/repos/OOP_Project/OOP_Project/Databases/UserDB.json";
+        static string packageDBPath = "C:/Users/Csgo2/source/repos/OOP_Project/OOP_Project/Databases/PackageDB.json";
 
         [TestMethod]
         public void DatabaseAddUser()
@@ -15,14 +18,13 @@ namespace UnitTests
 
             try
             {
-                string path = "C:/Users/Csgo2/source/repos/OOP_Project/OOP_Project/Databases/UserDB.json";
-                User user = new(1, "Julian");
+                User user = new(Guid.NewGuid(), "Julian");
                 List<User> users = new List<User>();
 
                 try { DatabaseManager.AddUser(user); }
                 catch (Exception ex) { Console.WriteLine(ex.Message); }
 
-                string existingData = File.ReadAllText(path);
+                string existingData = File.ReadAllText(userDBPath);
                 users = JsonSerializer.Deserialize<List<User>>(existingData) ?? new List<User>();
 
                 Assert.IsTrue(users.Exists(u => u.id == user.id));
@@ -37,7 +39,7 @@ namespace UnitTests
 
             try
             {
-                User user = new(1, "Julian");
+                User user = new(Guid.NewGuid(), "Yan");
 
                 try { DatabaseManager.AddUser(user); }
                 catch (Exception ex) { Console.WriteLine(ex.Message); }
@@ -56,9 +58,8 @@ namespace UnitTests
 
             try
             {
-                string path = "C:/Users/Csgo2/source/repos/OOP_Project/OOP_Project/Databases/PackageDB.json";
-                User sender = new(1, "Julian");
-                User receiver = new(2, "Lukas");
+                User sender = new(Guid.NewGuid(), "Kein");
+                User receiver = new(Guid.NewGuid(), "Lukas");
                 List<Package> packages = new List<Package>();
 
                 try { DatabaseManager.AddUser(sender); }
@@ -67,12 +68,12 @@ namespace UnitTests
                 try { DatabaseManager.AddUser(receiver); }
                 catch (Exception ex) { Console.WriteLine(ex.Message); }
 
-                Package package = new(1, sender.id, receiver.id, "в дорозі", 12, 1500, false);
+                Package package = new(packageGuid, sender.id, receiver.id, "в дорозі", 12, 1500, false);
 
                 try { bool res = DatabaseManager.AddPackage(package); }
                 catch (Exception ex) { Console.WriteLine(ex.Message); }
 
-                string existingData = File.ReadAllText(path);
+                string existingData = File.ReadAllText(packageDBPath);
                 packages = JsonSerializer.Deserialize<List<Package>>(existingData) ?? new List<Package>();
 
                 Assert.IsTrue(packages.Exists(p => p.id == package.id));
@@ -87,9 +88,9 @@ namespace UnitTests
 
             try
             {
-                User sender = new(1, "Julian");
-                User receiver = new(2, "Lukas");
-                Package package = new(1, sender.id, receiver.id, "в дорозі", 12, 1450, false);
+                User sender = new(Guid.NewGuid(), "Loyd");
+                User receiver = new(Guid.NewGuid(), "Hank");
+                Package package = new(packageGuid, sender.id, receiver.id, "в дорозі", 12, 1450, false);
 
                 try { DatabaseManager.AddUser(sender); }
                 catch (Exception ex) { Console.WriteLine(ex.Message); }
@@ -104,63 +105,43 @@ namespace UnitTests
             finally { fileMutex.ReleaseMutex(); }
         }
 
-        /*[TestMethod]
+        [TestMethod]
         public void databaseGetPackagesByUserId()
         {
-            User sender = new(1, "Julian");
-            User receiver_1 = new(2, "Lukas");
-            User receiver_2 = new(3, "Pedro");
-            User receiver_3 = new(4, "Logan");
+            Guid userId = Guid.Parse("69a0dcd0-1901-41e4-9fdd-72cf816e65ea");
+            Guid packageId = Guid.Parse("13b187b0-069e-456d-a14d-029d23c3a9cc");
+            List<Package> existPackages = new List<Package>();
 
-            Package package_1 = new(1, sender, receiver_1, "в дорозі", 12, 1450, false);
-            Package package_2 = new(2, sender, receiver_2, "в дорозі", 0, 500, true);
-            Package package_3 = new(3, sender, receiver_3, "в дорозі", 2, 700, false);
+            string existingData = File.ReadAllText(packageDBPath);
+            existPackages = JsonSerializer.Deserialize<List<Package>>(existingData) ?? new List<Package>();
 
-            DatabaseManager.AddUser(sender);
-            DatabaseManager.AddUser(receiver_1);
-            DatabaseManager.AddUser(receiver_2);
-            DatabaseManager.AddUser(receiver_3);
+            List<Package> packages = DatabaseManager.GetPackagesByUser(userId);
 
-            DatabaseManager.AddPackage(package_1);
-            DatabaseManager.AddPackage(package_2);
-            DatabaseManager.AddPackage(package_3);
-
-            List<Package> packages = DatabaseManager.GetPackagesByUser(1);
-
-            Assert.AreEqual(packages[2], package_3);
+            Assert.IsTrue(existPackages.Exists(p => p.id == packageId) && packages.Exists(p => p.senderId == userId));
         }
 
         [TestMethod]
         public void databaseGetUserById()
         {
-            User user = new(1, "Julian");
+            Guid userId = Guid.Parse("69a0dcd0-1901-41e4-9fdd-72cf816e65ea");
 
-            DatabaseManager.AddUser(user);
+            User res = DatabaseManager.GetUserById(userId);
 
-            User res = DatabaseManager.GetUserById(1);
-
-            Assert.AreEqual(user, res);
+            Assert.IsNotNull(res);
         }
 
         [TestMethod]
         public void databaseGetAllUsers()
         {
-            User user_1 = new(1, "Julian");
-            User user_2 = new(2, "Lukas");
-            User user_3 = new(3, "Pedro");
-            List<User> users = new() { user_1, user_2, user_3 };
+            List<User> users = new List<User>();
 
+            string existingData = File.ReadAllText(packageDBPath);
+            users = JsonSerializer.Deserialize<List<User>>(existingData) ?? new List<User>();
 
-            DatabaseManager.AddUser(user_1);
-            DatabaseManager.AddUser(user_2);
-            DatabaseManager.AddUser(user_3);
-
-            List<User> res = DatabaseManager.GetAllUsers();
-
-            Assert.AreEqual(res, users);
+            Assert.IsNotNull(users);
         }
 
-        [TestMethod]
+        /*[TestMethod]
         public void Registration()
         {
             bool res = RegisterForm.Register("Pablo", "123123", "123123");

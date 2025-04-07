@@ -10,7 +10,7 @@ namespace OOP_Project
     {
         static abstract bool DelUser(User user);
         static abstract bool AddUser(User user);
-        static abstract User GetUserById(int id);
+        static abstract User GetUserById(Guid id);
         static abstract List<User> GetAllUsers();
     }
 }

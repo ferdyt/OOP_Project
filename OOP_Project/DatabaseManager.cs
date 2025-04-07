@@ -10,13 +10,15 @@ namespace OOP_Project
 {
     public class DatabaseManager : IPackageRepository, IUserRepository
     {
+        static string packagePath = "C:/Users/Csgo2/source/repos/OOP_Project/OOP_Project/Databases/PackageDB.json";
+        static string userPath = "C:/Users/Csgo2/source/repos/OOP_Project/OOP_Project/Databases/UserDB.json";
+
         public static bool DelUser(User user)
         {
-            string path = "C:/Users/Csgo2/source/repos/OOP_Project/OOP_Project/Databases/UserDB.json";
 
-            if (!File.Exists(path)) return false;
+            if (!File.Exists(userPath)) return false;
 
-            string existingData = File.ReadAllText(path);
+            string existingData = File.ReadAllText(userPath);
             List<User> users = JsonSerializer.Deserialize<List<User>>(existingData) ?? new List<User>();
 
             var userToRemove = users.Find(u => u.id == user.id);
@@ -25,20 +27,18 @@ namespace OOP_Project
             users.Remove(userToRemove);
 
             string jsonString = JsonSerializer.Serialize(users, new JsonSerializerOptions { WriteIndented = true });
-            File.WriteAllText(path, jsonString);
+            File.WriteAllText(userPath, jsonString);
 
             return true;
         }
 
         public static bool AddUser(User user)
         {
-            string path = "C:/Users/Csgo2/source/repos/OOP_Project/OOP_Project/Databases/UserDB.json";
-
             List<User> users = new List<User>();
 
-            if (File.Exists(path))
+            if (File.Exists(userPath))
             {
-                string existingData = File.ReadAllText(path);
+                string existingData = File.ReadAllText(userPath);
                 if (!string.IsNullOrEmpty(existingData))
                 {
                     users = JsonSerializer.Deserialize<List<User>>(existingData) ?? new List<User>();
@@ -52,16 +52,13 @@ namespace OOP_Project
 
             users.Add(user);
             string jsonString = JsonSerializer.Serialize(users, new JsonSerializerOptions { WriteIndented = true });
-            File.WriteAllText(path, jsonString);
+            File.WriteAllText(userPath, jsonString);
 
             return true; 
         }
 
         public static bool AddPackage(Package package)
         {
-            string packagePath = "C:/Users/Csgo2/source/repos/OOP_Project/OOP_Project/Databases/PackageDB.json";
-            string userPath = "C:/Users/Csgo2/source/repos/OOP_Project/OOP_Project/Databases/UserDB.json";
-
             List<Package> packages = new List<Package>();
             List<User> users = new List<User>();
 
@@ -103,9 +100,17 @@ namespace OOP_Project
             return true;
         }
 
-        public static User GetUserById(int id)
+        public static User GetUserById(Guid id)
         {
-            throw new NotImplementedException();
+            string existingUsers = File.ReadAllText(userPath);
+            List<User> users = new List<User>();
+
+            if (!string.IsNullOrEmpty(existingUsers))
+            {
+                users = JsonSerializer.Deserialize<List<User>>(existingUsers) ?? new List<User>();
+            }
+
+            return users.FirstOrDefault(u => u.id == id);
         }
 
         public static List<User> GetAllUsers()
@@ -113,7 +118,7 @@ namespace OOP_Project
             throw new NotImplementedException();
         }
 
-        public static List<Package> GetPackagesByUser(int userId)
+        public static List<Package> GetPackagesByUser(Guid userId)
         {
             string path = "C:/Users/Csgo2/source/repos/OOP_Project/OOP_Project/Databases/PackageDB.json";
 

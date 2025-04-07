@@ -8,10 +8,10 @@ namespace OOP_Project
 {
     public class User
     {
-        public int id { get; }
+        public Guid id { get; }
         public string login { get; }
 
-        public User(int id, string login)
+        public User(Guid id, string login)
         {
             this.id = id;
             this.login = login;

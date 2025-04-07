@@ -1,11 +1,29 @@
 [
   {
-    "id": 1,
-    "senderId": 1,
-    "receiverId": 2,
+    "id": "13b187b0-069e-456d-a14d-029d23c3a9cc",
+    "senderId": "69a0dcd0-1901-41e4-9fdd-72cf816e65ea",
+    "receiverId": "38db9f03-39d6-4169-a692-1c521d048a07",
     "status": "\u0432 \u0434\u043E\u0440\u043E\u0437\u0456",
     "weight": 12,
     "cost": 1450,
+    "isDockument": false
+  },
+  {
+    "id": "b6d1d0c1-9cb5-4f88-af99-9dbc5c5af654",
+    "senderId": "58350528-70ad-48d2-a2aa-e1ca8b4f05a8",
+    "receiverId": "31a86d9e-32bf-4d84-b687-b8df4bdf4cf8",
+    "status": "\u0432 \u0434\u043E\u0440\u043E\u0437\u0456",
+    "weight": 12,
+    "cost": 1450,
+    "isDockument": false
+  },
+  {
+    "id": "76e19e29-18ea-485f-b933-fa80a5122b76",
+    "senderId": "7fa3d506-73d9-4c00-b88a-e976caa6b16e",
+    "receiverId": "f1773e10-73fc-4b1b-8a3d-32551449896a",
+    "status": "\u0432 \u0434\u043E\u0440\u043E\u0437\u0456",
+    "weight": 12,
+    "cost": 1500,
     "isDockument": false
   }
 ]
