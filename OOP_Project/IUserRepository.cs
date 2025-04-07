@@ -8,9 +8,9 @@ namespace OOP_Project
 {
     interface IUserRepository
     {
-        static abstract bool DelUser(User user);
+        static abstract bool DelUser(string login);
         static abstract bool AddUser(User user);
-        static abstract User GetUserById(Guid id);
+        static abstract User GetUserByLogin(string login);
         static abstract List<User> GetAllUsers();
     }
 }

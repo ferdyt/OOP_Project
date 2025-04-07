@@ -1,26 +1,42 @@
 [
   {
-    "id": "69a0dcd0-1901-41e4-9fdd-72cf816e65ea",
-    "login": "Loyd"
+    "Name": "Julian",
+    "login": "Julian_123",
+    "password": "123123",
+    "packagesSends": [],
+    "packagesReceive": []
   },
   {
-    "id": "58350528-70ad-48d2-a2aa-e1ca8b4f05a8",
-    "login": "Loyd"
+    "Name": "Kein",
+    "login": "Kein22",
+    "password": "123123",
+    "packagesSends": [
+      "12cbc01f-a993-4964-a799-4a68105d109f",
+      "9f18f859-4b05-4353-8e63-31f1fcc2d240",
+      "7eb46784-a6ab-40c3-a67a-1e8dd1cb0685",
+      "f7b1156d-abe8-40bb-a3b4-383af0423a39",
+      "d494cd4f-16bd-457a-9287-649e02ce8cf2"
+    ],
+    "packagesReceive": []
   },
   {
-    "id": "31a86d9e-32bf-4d84-b687-b8df4bdf4cf8",
-    "login": "Hank"
+    "Name": "Lukas",
+    "login": "Lukasss",
+    "password": "123123",
+    "packagesSends": [],
+    "packagesReceive": [
+      "12cbc01f-a993-4964-a799-4a68105d109f",
+      "9f18f859-4b05-4353-8e63-31f1fcc2d240",
+      "7eb46784-a6ab-40c3-a67a-1e8dd1cb0685",
+      "f7b1156d-abe8-40bb-a3b4-383af0423a39",
+      "d494cd4f-16bd-457a-9287-649e02ce8cf2"
+    ]
   },
   {
-    "id": "6ae49cf2-5f48-4802-a396-4dc85e218f13",
-    "login": "Julian"
-  },
-  {
-    "id": "7fa3d506-73d9-4c00-b88a-e976caa6b16e",
-    "login": "Kein"
-  },
-  {
-    "id": "f1773e10-73fc-4b1b-8a3d-32551449896a",
-    "login": "Lukas"
+    "Name": "Pablo",
+    "login": "PabloTax",
+    "password": "123123",
+    "packagesSends": [],
+    "packagesReceive": []
   }
 ]

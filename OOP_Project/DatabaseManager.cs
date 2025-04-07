@@ -13,7 +13,7 @@ namespace OOP_Project
         static string packagePath = "C:/Users/Csgo2/source/repos/OOP_Project/OOP_Project/Databases/PackageDB.json";
         static string userPath = "C:/Users/Csgo2/source/repos/OOP_Project/OOP_Project/Databases/UserDB.json";
 
-        public static bool DelUser(User user)
+        public static bool DelUser(string login)
         {
 
             if (!File.Exists(userPath)) return false;
@@ -21,7 +21,7 @@ namespace OOP_Project
             string existingData = File.ReadAllText(userPath);
             List<User> users = JsonSerializer.Deserialize<List<User>>(existingData) ?? new List<User>();
 
-            var userToRemove = users.Find(u => u.id == user.id);
+            var userToRemove = users.Find(u => u.login == login);
             if (userToRemove == null) return false;
 
             users.Remove(userToRemove);
@@ -36,6 +36,12 @@ namespace OOP_Project
         {
             List<User> users = new List<User>();
 
+            if (string.IsNullOrWhiteSpace(user.login) || user.login.Length < 2) return false;
+
+            if (user == null || user.login == null || user.Name == null) return false;
+
+            if (user.password.Length < 4 || string.IsNullOrWhiteSpace(user.password)) return false;
+
             if (File.Exists(userPath))
             {
                 string existingData = File.ReadAllText(userPath);
@@ -45,7 +51,7 @@ namespace OOP_Project
                 }
             }
 
-            if (users.Exists(u => u.id == user.id))
+            if (users.Exists(u => u.login == user.login))
             {
                 throw new Exception("Користувач вже існує");
             }
@@ -61,6 +67,9 @@ namespace OOP_Project
         {
             List<Package> packages = new List<Package>();
             List<User> users = new List<User>();
+
+            if (package == null) return false;
+            if (package.isDockument && package.weight > 0.1) return false;
 
             if (File.Exists(packagePath))
             {
@@ -85,13 +94,22 @@ namespace OOP_Project
                 }
             }
 
-            User sender = users.Find(u => u.id == package.senderId);
-            User receiver = users.Find(u => u.id == package.receiverId);
+            User sender = users.Find(u => u.login == package.senderLogin);
+            User receiver = users.Find(u => u.login == package.receiverLogin);
 
             if (sender == null || receiver == null)
             {
                 return false;
             }
+
+            if (!sender.packagesSends.Contains(package.id))
+                sender.packagesSends.Add(package.id);
+
+            if (!receiver.packagesReceive.Contains(package.id))
+                receiver.packagesReceive.Add(package.id);
+
+            string updatedUsersJson = JsonSerializer.Serialize(users, new JsonSerializerOptions { WriteIndented = true });
+            File.WriteAllText(userPath, updatedUsersJson);
 
             packages.Add(package);
             string updatedPackagesJson = JsonSerializer.Serialize(packages, new JsonSerializerOptions { WriteIndented = true });
@@ -100,7 +118,7 @@ namespace OOP_Project
             return true;
         }
 
-        public static User GetUserById(Guid id)
+        public static User GetUserByLogin(string login)
         {
             string existingUsers = File.ReadAllText(userPath);
             List<User> users = new List<User>();
@@ -110,7 +128,7 @@ namespace OOP_Project
                 users = JsonSerializer.Deserialize<List<User>>(existingUsers) ?? new List<User>();
             }
 
-            return users.FirstOrDefault(u => u.id == id);
+            return users.FirstOrDefault(u => u.login == login);
         }
 
         public static List<User> GetAllUsers()
@@ -118,7 +136,7 @@ namespace OOP_Project
             throw new NotImplementedException();
         }
 
-        public static List<Package> GetPackagesByUser(Guid userId)
+        public static List<Package> GetPackagesByUser(string userLogin)
         {
             string path = "C:/Users/Csgo2/source/repos/OOP_Project/OOP_Project/Databases/PackageDB.json";
 
@@ -127,12 +145,12 @@ namespace OOP_Project
             string existingData = File.ReadAllText(path);
             List<Package> packages = JsonSerializer.Deserialize<List<Package>>(existingData) ?? new List<Package>();
 
-            List<Package> result = packages.FindAll(p => p.senderId == userId || p.senderId == userId);
+            List<Package> result = packages.FindAll(p => p.senderLogin == userLogin || p.senderLogin == userLogin);
 
             return result;
         }
 
-        public static bool UpdatePackage(Package package)
+        public static bool UpdatePackage(Package package, Guid id)
         {
             string path = "C:/Users/Csgo2/source/repos/OOP_Project/OOP_Project/Databases/PackageDB.json";
 
@@ -140,25 +158,16 @@ namespace OOP_Project
 
             string existingData = File.ReadAllText(path);
             List<Package> packages = JsonSerializer.Deserialize<List<Package>>(existingData) ?? new List<Package>();
-            Package packageToDel = null;
 
-            foreach (Package p in packages)
-            {
-                if (p.id == package.id)
-                {
-                    packageToDel = p;
-                }
-            }
+            int removedCount = packages.RemoveAll(p => p.id == id);
 
-            if (packageToDel != null)
-            {
-                packages.Remove(packageToDel);
-            }
+            if (removedCount == 0)
+                return false;
 
             packages.Add(package);
 
-            string updatePackage = JsonSerializer.Serialize(packages, new JsonSerializerOptions { WriteIndented = true });
-            File.WriteAllText(path, updatePackage);
+            string updatedData = JsonSerializer.Serialize(packages, new JsonSerializerOptions { WriteIndented = true });
+            File.WriteAllText(path, updatedData);
 
             return true;
         }

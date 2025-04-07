@@ -9,7 +9,7 @@ namespace OOP_Project
     interface IPackageRepository
     {
         static abstract bool AddPackage(Package package);
-        static abstract List<Package> GetPackagesByUser(Guid userId);
-        static abstract bool UpdatePackage(Package package);
+        static abstract List<Package> GetPackagesByUser(string userLogin);
+        static abstract bool UpdatePackage(Package package, Guid id);
     }
 }

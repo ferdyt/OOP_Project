@@ -6,7 +6,6 @@ namespace UnitTests
     [TestClass]
     public sealed class Test1
     {
-        Guid packageGuid = Guid.NewGuid();
         private static readonly Mutex fileMutex = new Mutex();
         static string userDBPath = "C:/Users/Csgo2/source/repos/OOP_Project/OOP_Project/Databases/UserDB.json";
         static string packageDBPath = "C:/Users/Csgo2/source/repos/OOP_Project/OOP_Project/Databases/PackageDB.json";
@@ -18,7 +17,7 @@ namespace UnitTests
 
             try
             {
-                User user = new(Guid.NewGuid(), "Julian");
+                User user = new("Julian_123", "123123", "Julian");
                 List<User> users = new List<User>();
 
                 try { DatabaseManager.AddUser(user); }
@@ -27,7 +26,70 @@ namespace UnitTests
                 string existingData = File.ReadAllText(userDBPath);
                 users = JsonSerializer.Deserialize<List<User>>(existingData) ?? new List<User>();
 
-                Assert.IsTrue(users.Exists(u => u.id == user.id));
+                Assert.IsTrue(users.Exists(u => u.login == user.login));
+            }
+            finally { fileMutex?.ReleaseMutex(); }
+        }
+
+        [TestMethod]
+        public void DatabaseAddUserWithWhiteLogin()
+        {
+            fileMutex.WaitOne();
+
+            try
+            {
+                User user = new("", "123123", "");
+                List<User> users = new List<User>();
+
+                try { DatabaseManager.AddUser(user); }
+                catch (Exception ex) { Console.WriteLine(ex.Message); }
+
+                string existingData = File.ReadAllText(userDBPath);
+                users = JsonSerializer.Deserialize<List<User>>(existingData) ?? new List<User>();
+
+                Assert.IsFalse(users.Exists(u => u.login == user.login));
+            }
+            finally { fileMutex?.ReleaseMutex(); }
+        }
+
+        [TestMethod]
+        public void DatabaseAddUserWithNullLogin()
+        {
+            fileMutex.WaitOne();
+
+            try
+            {
+                User user = new(null, "123123", null);
+                List<User> users = new List<User>();
+
+                try { DatabaseManager.AddUser(user); }
+                catch (Exception ex) { Console.WriteLine(ex.Message); }
+
+                string existingData = File.ReadAllText(userDBPath);
+                users = JsonSerializer.Deserialize<List<User>>(existingData) ?? new List<User>();
+
+                Assert.IsFalse(users.Exists(u => u.login == user.login));
+            }
+            finally { fileMutex?.ReleaseMutex(); }
+        }
+
+        [TestMethod]
+        public void DatabaseAddUserWithUncorrectLogin()
+        {
+            fileMutex.WaitOne();
+
+            try
+            {
+                User user = new("h", "123123", "h");
+                List<User> users = new List<User>();
+
+                try { DatabaseManager.AddUser(user); }
+                catch (Exception ex) { Console.WriteLine(ex.Message); }
+
+                string existingData = File.ReadAllText(userDBPath);
+                users = JsonSerializer.Deserialize<List<User>>(existingData) ?? new List<User>();
+
+                Assert.IsFalse(users.Exists(u => u.login == user.login));
             }
             finally { fileMutex?.ReleaseMutex(); }
         }
@@ -39,12 +101,12 @@ namespace UnitTests
 
             try
             {
-                User user = new(Guid.NewGuid(), "Yan");
+                User user = new("Yan49", "123123", "Yan");
 
                 try { DatabaseManager.AddUser(user); }
                 catch (Exception ex) { Console.WriteLine(ex.Message); }
 
-                bool res = DatabaseManager.DelUser(user);
+                bool res = DatabaseManager.DelUser("Yan49");
 
                 Assert.IsTrue(res);
             }
@@ -58,8 +120,8 @@ namespace UnitTests
 
             try
             {
-                User sender = new(Guid.NewGuid(), "Kein");
-                User receiver = new(Guid.NewGuid(), "Lukas");
+                User sender = new("Kein22", "123123", "Kein");
+                User receiver = new("Lukasss", "123123", "Lukas");
                 List<Package> packages = new List<Package>();
 
                 try { DatabaseManager.AddUser(sender); }
@@ -68,7 +130,67 @@ namespace UnitTests
                 try { DatabaseManager.AddUser(receiver); }
                 catch (Exception ex) { Console.WriteLine(ex.Message); }
 
-                Package package = new(packageGuid, sender.id, receiver.id, "в дорозі", 12, 1500, false);
+                Package package = new(Guid.NewGuid(), sender.login, receiver.login, "в дорозі", 12, 1500, false);
+
+                try { bool res = DatabaseManager.AddPackage(package); }
+                catch (Exception ex) { Console.WriteLine(ex.Message); }
+
+                string existingData = File.ReadAllText(packageDBPath);
+                packages = JsonSerializer.Deserialize<List<Package>>(existingData) ?? new List<Package>();
+
+                Assert.IsTrue(packages.Exists(p => p.id == package.id));
+            }
+            finally { fileMutex?.ReleaseMutex(); }
+        }
+
+        [TestMethod]
+        public void DatabaseAddWrongPackage()
+        {
+            fileMutex.WaitOne();
+
+            try
+            {
+                User sender = new("Kein22", "123123", "Kein");
+                User receiver = new("Lukasss", "123123", "Lukas");
+                List<Package> packages = new List<Package>();
+
+                try { DatabaseManager.AddUser(sender); }
+                catch (Exception ex) { Console.WriteLine(ex.Message); }
+
+                try { DatabaseManager.AddUser(receiver); }
+                catch (Exception ex) { Console.WriteLine(ex.Message); }
+
+                Package package = new(Guid.NewGuid(), sender.login, receiver.login, "в дорозі", 12, 1500, true);
+
+                try { bool res = DatabaseManager.AddPackage(package); }
+                catch (Exception ex) { Console.WriteLine(ex.Message); }
+
+                string existingData = File.ReadAllText(packageDBPath);
+                packages = JsonSerializer.Deserialize<List<Package>>(existingData) ?? new List<Package>();
+
+                Assert.IsFalse(packages.Exists(p => p.id == package.id));
+            }
+            finally { fileMutex?.ReleaseMutex(); }
+        }
+
+        [TestMethod]
+        public void DatabaseAddIsDockumentPackage()
+        {
+            fileMutex.WaitOne();
+
+            try
+            {
+                User sender = new("Kein22", "123123", "Kein");
+                User receiver = new("Lukasss", "123123", "Lukas");
+                List<Package> packages = new List<Package>();
+
+                try { DatabaseManager.AddUser(sender); }
+                catch (Exception ex) { Console.WriteLine(ex.Message); }
+
+                try { DatabaseManager.AddUser(receiver); }
+                catch (Exception ex) { Console.WriteLine(ex.Message); }
+
+                Package package = new(Guid.NewGuid(), sender.login, receiver.login, "в дорозі", 0, 500, true);
 
                 try { bool res = DatabaseManager.AddPackage(package); }
                 catch (Exception ex) { Console.WriteLine(ex.Message); }
@@ -88,17 +210,77 @@ namespace UnitTests
 
             try
             {
-                User sender = new(Guid.NewGuid(), "Loyd");
-                User receiver = new(Guid.NewGuid(), "Hank");
-                Package package = new(packageGuid, sender.id, receiver.id, "в дорозі", 12, 1450, false);
+                Guid testId = Guid.NewGuid();
+                Package initial = new(testId, "Kein22", "Lukasss", "в дорозі", 12, 1450, false);
+                DatabaseManager.AddPackage(initial);
 
-                try { DatabaseManager.AddUser(sender); }
-                catch (Exception ex) { Console.WriteLine(ex.Message); }
+                Package updated = new(testId, "Kein22", "Lukasss", "доставлено", 12, 1450, false);
+                bool res = DatabaseManager.UpdatePackage(updated, testId);
+            }
+            finally { fileMutex.ReleaseMutex(); }
+        }
 
-                try { DatabaseManager.AddUser(receiver); }
-                catch (Exception ex) { Console.WriteLine(ex.Message); }
+        [TestMethod]
+        public void databaseGetPackagesByUserLogin()
+        {
+            fileMutex.WaitOne();
 
-                bool res = DatabaseManager.UpdatePackage(package);
+            try
+            {
+                string userLogin = "Loyd56";
+                List<Package> existPackages = new List<Package>();
+
+                string existingData = File.ReadAllText(packageDBPath);
+                existPackages = JsonSerializer.Deserialize<List<Package>>(existingData) ?? new List<Package>();
+
+                List<Package> packages = DatabaseManager.GetPackagesByUser(userLogin);
+
+                Assert.IsNotNull(packages);
+            }
+            finally { fileMutex.ReleaseMutex();}
+        }
+
+        [TestMethod]
+        public void databaseGetUserById()
+        {
+            fileMutex.WaitOne();
+
+            try
+            {
+                User res = DatabaseManager.GetUserByLogin("Julian_123");
+
+                Assert.IsNotNull(res);
+            }
+            finally { fileMutex.ReleaseMutex(); }
+        }
+
+        [TestMethod]
+        public void databaseGetAllUsers()
+        {
+            fileMutex.WaitOne();
+
+            try
+            {
+                List<User> users = new List<User>();
+
+                string existingData = File.ReadAllText(packageDBPath);
+                users = JsonSerializer.Deserialize<List<User>>(existingData) ?? new List<User>();
+
+                Assert.IsNotNull(users);
+            }
+            finally { fileMutex.ReleaseMutex(); }
+        }
+
+        [TestMethod]
+        public void CorrectRegistration()
+        {
+            fileMutex.WaitOne();
+
+            try
+            {
+                DatabaseManager.DelUser("PabloTax");
+
+                bool res = RegisterForm.Register("PabloTax", "123123", "123123", "Pablo");
 
                 Assert.IsTrue(res);
             }
@@ -106,58 +288,53 @@ namespace UnitTests
         }
 
         [TestMethod]
-        public void databaseGetPackagesByUserId()
+        public void RegistrationWithWhitePassword()
         {
-            Guid userId = Guid.Parse("69a0dcd0-1901-41e4-9fdd-72cf816e65ea");
-            Guid packageId = Guid.Parse("13b187b0-069e-456d-a14d-029d23c3a9cc");
-            List<Package> existPackages = new List<Package>();
+            fileMutex.WaitOne();
 
-            string existingData = File.ReadAllText(packageDBPath);
-            existPackages = JsonSerializer.Deserialize<List<Package>>(existingData) ?? new List<Package>();
+            try
+            {
+                bool res = RegisterForm.Register("PabloTax", "", "", "Pablo");
 
-            List<Package> packages = DatabaseManager.GetPackagesByUser(userId);
-
-            Assert.IsTrue(existPackages.Exists(p => p.id == packageId) && packages.Exists(p => p.senderId == userId));
+                Assert.IsFalse(res);
+            }
+            finally { fileMutex.ReleaseMutex(); }
         }
 
         [TestMethod]
-        public void databaseGetUserById()
+        public void RegistrationWithNullPassword()
         {
-            Guid userId = Guid.Parse("69a0dcd0-1901-41e4-9fdd-72cf816e65ea");
+            fileMutex.WaitOne();
 
-            User res = DatabaseManager.GetUserById(userId);
+            try
+            {
+                bool res = RegisterForm.Register("PabloTax", null, null, "Pablo");
 
-            Assert.IsNotNull(res);
+                Assert.IsFalse(res);
+            }
+            finally { fileMutex.ReleaseMutex(); }
         }
 
         [TestMethod]
-        public void databaseGetAllUsers()
+        public void RegistrationWithWrongPassword()
         {
-            List<User> users = new List<User>();
+            fileMutex.WaitOne();
 
-            string existingData = File.ReadAllText(packageDBPath);
-            users = JsonSerializer.Deserialize<List<User>>(existingData) ?? new List<User>();
+            try
+            {
+                bool res = RegisterForm.Register("PabloTax", "123", "123", "Pablo");
 
-            Assert.IsNotNull(users);
+                Assert.IsFalse(res);
+            }
+            finally { fileMutex.ReleaseMutex(); }
         }
 
-        /*[TestMethod]
-        public void Registration()
+        [TestMethod]
+        public void CorrectAuthorisation()
         {
-            bool res = RegisterForm.Register("Pablo", "123123", "123123");
+            bool res = AuthForm.Login("PabloTax", "123123");
 
             Assert.IsTrue(res);
         }
-
-        [TestMethod]
-        public void Authorisation()
-        {
-            RegisterForm.Register("Pablo", "123123", "123123");
-
-            bool res = AuthForm.Login("Pablo", "123123");
-
-            Assert.IsTrue(res);
-        }
-        */
     }
 }
