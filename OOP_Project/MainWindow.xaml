@@ -8,6 +8,6 @@
 
         Title="OOP project" Width="1200" Height="800" Background="#D9D9D9" WindowStartupLocation="CenterScreen">
     <Grid>
-
+        <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden"/>
     </Grid>
 </Window>

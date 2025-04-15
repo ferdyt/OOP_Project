@@ -280,7 +280,7 @@ namespace UnitTests
             {
                 DatabaseManager.DelUser("PabloTax");
 
-                bool res = RegisterForm.Register("PabloTax", "123123", "123123", "Pablo");
+                bool res = DatabaseManager.Register("PabloTax", "123123", "123123", "Pablo");
 
                 Assert.IsTrue(res);
             }
@@ -294,7 +294,7 @@ namespace UnitTests
 
             try
             {
-                bool res = RegisterForm.Register("PabloTax", "", "", "Pablo");
+                bool res = DatabaseManager.Register("PabloTax", "", "", "Pablo");
 
                 Assert.IsFalse(res);
             }
@@ -308,7 +308,7 @@ namespace UnitTests
 
             try
             {
-                bool res = RegisterForm.Register("PabloTax", null, null, "Pablo");
+                bool res = DatabaseManager.Register("PabloTax", null, null, "Pablo");
 
                 Assert.IsFalse(res);
             }
@@ -322,7 +322,7 @@ namespace UnitTests
 
             try
             {
-                bool res = RegisterForm.Register("PabloTax", "123", "123", "Pablo");
+                bool res = DatabaseManager.Register("PabloTax", "123", "123", "Pablo");
 
                 Assert.IsFalse(res);
             }
@@ -332,7 +332,7 @@ namespace UnitTests
         [TestMethod]
         public void CorrectAuthorisation()
         {
-            bool res = AuthForm.Login("PabloTax", "123123");
+            bool res = DatabaseManager.Login("PabloTax", "123123");
 
             Assert.IsTrue(res);
         }

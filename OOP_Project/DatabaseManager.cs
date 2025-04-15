@@ -171,5 +171,37 @@ namespace OOP_Project
 
             return true;
         }
+
+        public static bool Login(string username, string password)
+        {
+            string userPath = "C:/Users/Csgo2/source/repos/OOP_Project/OOP_Project/Databases/UserDB.json";
+
+            if (username == null || password == null)
+                return false;
+
+            string existingData = File.ReadAllText(userPath);
+            List<User> users = JsonSerializer.Deserialize<List<User>>(existingData);
+
+            var user = users.FirstOrDefault(u => u.login == username);
+
+            if (user == null)
+                return false;
+
+            if (user.password != password)
+                return false;
+
+            return true;
+        }
+
+        public static bool Register(string username, string password, string confirm_password, string name)
+        {
+            if (password != confirm_password) return false;
+
+            if (username == null || password == null || confirm_password == null) return false;
+
+            User user = new User(username, password, name);
+            bool result = DatabaseManager.AddUser(user);
+            return result;
+        }
     }
 }
