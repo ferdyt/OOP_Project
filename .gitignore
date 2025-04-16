@@ -363,3 +363,5 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/OOP_Project/Databases/PackageDB.json
+/OOP_Project/Databases/UserDB.json
