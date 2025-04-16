@@ -47,7 +47,7 @@
             <Label x:Name="OutputLabel" Content="Test" FontSize="16" HorizontalAlignment="Left" Grid.Column="1" Margin="141,0,0,0"/>
         </Grid>
         <Grid Grid.Row="3">
-            <Button x:Name="PersonalAccountButton" Content="Особистий кабінет" Width="173" Height="40" HorizontalAlignment="Center" VerticalAlignment="Bottom" Style="{StaticResource ResourceKey=DarkButton}"/>
+            <Button x:Name="PersonalAccountButton" Content="Особистий кабінет" Width="173" Height="40" HorizontalAlignment="Center" VerticalAlignment="Bottom" Style="{StaticResource ResourceKey=DarkButton}" Click="PersonalAccountButton_Click"/>
         </Grid>
     </Grid>
 </Page>

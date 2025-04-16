@@ -11,13 +11,16 @@ namespace OOP_Project
     {
         public Guid id { get; }
         public string senderLogin { get; }
+        public string senderCity { get; }
         public string receiverLogin { get; }
+        public string receiverCity { get; }
         public string status { get; }
         public float weight { get; }
         public int cost { get; }
         public bool isDockument { get; }
+        public int postOffice { get; }
 
-        public Package(Guid id, string senderLogin, string receiverLogin, string status, float weight, int cost, bool isDockument)
+        public Package(Guid id, string senderLogin, string receiverLogin, string status, float weight, int cost, bool isDockument, string senderCity, string receiverCity, int postOffice)
         {
             this.id = id;
             this.senderLogin = senderLogin;
@@ -26,6 +29,9 @@ namespace OOP_Project
             this.weight = weight;
             this.cost = cost;
             this.isDockument = isDockument;
+            this.senderCity = senderCity;
+            this.receiverCity = receiverCity;
+            this.postOffice = postOffice;
         }
     }
 }

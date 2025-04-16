@@ -1,6 +1,8 @@
 [
   {
     "Name": "Julian",
+    "LastName": "Whitmore",
+    "MiddleName": "Alexander",
     "login": "Julian_123",
     "password": "123123",
     "packagesSends": [],
@@ -8,38 +10,40 @@
   },
   {
     "Name": "Kein",
+    "LastName": "Darnell",
+    "MiddleName": "Everett",
     "login": "Kein22",
     "password": "123123",
     "packagesSends": [
-      "12cbc01f-a993-4964-a799-4a68105d109f",
-      "9f18f859-4b05-4353-8e63-31f1fcc2d240",
-      "7eb46784-a6ab-40c3-a67a-1e8dd1cb0685",
-      "f7b1156d-abe8-40bb-a3b4-383af0423a39",
-      "d494cd4f-16bd-457a-9287-649e02ce8cf2",
-      "3335c08c-4a1b-43fc-bc67-a9ba7bb8522e",
-      "b6807956-8aa1-4ad5-8e92-6c99b2b82261",
-      "5303e50e-5335-49e0-9d9b-10a521e780d1"
+      "bcbef94f-6314-4b7d-8dfc-2dd3504882a3",
+      "2d0309d3-ab29-4316-85c8-aea238226300",
+      "6b24b65d-eadc-44a8-bdf4-8c8ba98a7121",
+      "4f18b41d-d2bc-4221-b45d-618a32b7f0a7",
+      "7e9672f4-2f2b-4205-b5ab-2019f9295623",
+      "34e6f715-7fbb-46e9-9a07-9ac165f9459c"
     ],
     "packagesReceive": []
   },
   {
     "Name": "Lukas",
+    "LastName": "Reinhardt",
+    "MiddleName": "Johann",
     "login": "Lukasss",
     "password": "123123",
     "packagesSends": [],
     "packagesReceive": [
-      "12cbc01f-a993-4964-a799-4a68105d109f",
-      "9f18f859-4b05-4353-8e63-31f1fcc2d240",
-      "7eb46784-a6ab-40c3-a67a-1e8dd1cb0685",
-      "f7b1156d-abe8-40bb-a3b4-383af0423a39",
-      "d494cd4f-16bd-457a-9287-649e02ce8cf2",
-      "3335c08c-4a1b-43fc-bc67-a9ba7bb8522e",
-      "b6807956-8aa1-4ad5-8e92-6c99b2b82261",
-      "5303e50e-5335-49e0-9d9b-10a521e780d1"
+      "bcbef94f-6314-4b7d-8dfc-2dd3504882a3",
+      "2d0309d3-ab29-4316-85c8-aea238226300",
+      "6b24b65d-eadc-44a8-bdf4-8c8ba98a7121",
+      "4f18b41d-d2bc-4221-b45d-618a32b7f0a7",
+      "7e9672f4-2f2b-4205-b5ab-2019f9295623",
+      "34e6f715-7fbb-46e9-9a07-9ac165f9459c"
     ]
   },
   {
     "Name": "Pablo",
+    "LastName": "Morales",
+    "MiddleName": "Enriquez",
     "login": "PabloTax",
     "password": "123123",
     "packagesSends": [],

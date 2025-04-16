@@ -12,7 +12,6 @@ namespace OOP_Project
     {
         static string packagePath = "C:/Users/Csgo2/source/repos/OOP_Project/OOP_Project/Databases/PackageDB.json";
         static string userPath = "C:/Users/Csgo2/source/repos/OOP_Project/OOP_Project/Databases/UserDB.json";
-
         public static bool DelUser(string login)
         {
 
@@ -38,7 +37,9 @@ namespace OOP_Project
 
             if (string.IsNullOrWhiteSpace(user.login) || user.login.Length < 2) return false;
 
-            if (user == null || user.login == null || user.Name == null) return false;
+            if (string.IsNullOrWhiteSpace(user.Name) || string.IsNullOrWhiteSpace(user.LastName) || string.IsNullOrWhiteSpace(user.MiddleName)) return false;
+
+            if (user.Name.Length < 2 || user.LastName.Length < 2 || user.MiddleName.Length < 2) return false;
 
             if (user.password.Length < 4 || string.IsNullOrWhiteSpace(user.password)) return false;
 
@@ -60,7 +61,7 @@ namespace OOP_Project
             string jsonString = JsonSerializer.Serialize(users, new JsonSerializerOptions { WriteIndented = true });
             File.WriteAllText(userPath, jsonString);
 
-            return true; 
+            return true;
         }
 
         public static bool AddPackage(Package package)
@@ -69,7 +70,12 @@ namespace OOP_Project
             List<User> users = new List<User>();
 
             if (package == null) return false;
+
             if (package.isDockument && package.weight > 0.1) return false;
+
+            if (package.senderCity.Length < 2 || package.receiverCity.Length < 2 || string.IsNullOrWhiteSpace(package.senderCity) || string.IsNullOrWhiteSpace(package.receiverCity)) return false;
+
+            if (package.postOffice <= 0) return true;
 
             if (File.Exists(packagePath))
             {
@@ -118,7 +124,7 @@ namespace OOP_Project
             return true;
         }
 
-        public static User GetUserByLogin(string login)
+        public static User? GetUserByLogin(string login)
         {
             string existingUsers = File.ReadAllText(userPath);
             List<User> users = new List<User>();
@@ -128,21 +134,16 @@ namespace OOP_Project
                 users = JsonSerializer.Deserialize<List<User>>(existingUsers) ?? new List<User>();
             }
 
-            return users.FirstOrDefault(u => u.login == login);
-        }
+            var user = users.FirstOrDefault(u => u.login == login);
 
-        public static List<User> GetAllUsers()
-        {
-            throw new NotImplementedException();
+            return user;
         }
 
         public static List<Package> GetPackagesByUser(string userLogin)
         {
-            string path = "C:/Users/Csgo2/source/repos/OOP_Project/OOP_Project/Databases/PackageDB.json";
+            if (!File.Exists(packagePath)) return new List<Package>();
 
-            if (!File.Exists(path)) return new List<Package>();
-
-            string existingData = File.ReadAllText(path);
+            string existingData = File.ReadAllText(packagePath);
             List<Package> packages = JsonSerializer.Deserialize<List<Package>>(existingData) ?? new List<Package>();
 
             List<Package> result = packages.FindAll(p => p.senderLogin == userLogin || p.senderLogin == userLogin);
@@ -152,11 +153,9 @@ namespace OOP_Project
 
         public static bool UpdatePackage(Package package, Guid id)
         {
-            string path = "C:/Users/Csgo2/source/repos/OOP_Project/OOP_Project/Databases/PackageDB.json";
+            if (!File.Exists(packagePath)) return false;
 
-            if (!File.Exists(path)) return false;
-
-            string existingData = File.ReadAllText(path);
+            string existingData = File.ReadAllText(packagePath);
             List<Package> packages = JsonSerializer.Deserialize<List<Package>>(existingData) ?? new List<Package>();
 
             int removedCount = packages.RemoveAll(p => p.id == id);
@@ -167,20 +166,21 @@ namespace OOP_Project
             packages.Add(package);
 
             string updatedData = JsonSerializer.Serialize(packages, new JsonSerializerOptions { WriteIndented = true });
-            File.WriteAllText(path, updatedData);
+            File.WriteAllText(packagePath, updatedData);
 
             return true;
         }
 
         public static bool Login(string username, string password)
         {
-            string userPath = "C:/Users/Csgo2/source/repos/OOP_Project/OOP_Project/Databases/UserDB.json";
-
             if (username == null || password == null)
                 return false;
 
             string existingData = File.ReadAllText(userPath);
             List<User> users = JsonSerializer.Deserialize<List<User>>(existingData);
+
+            if (users == null)
+                return false;
 
             var user = users.FirstOrDefault(u => u.login == username);
 
@@ -193,15 +193,39 @@ namespace OOP_Project
             return true;
         }
 
-        public static bool Register(string username, string password, string confirm_password, string name)
+        public static bool Register(string username, string password, string confirm_password, string name, string lastName, string middleName)
         {
             if (password != confirm_password) return false;
 
             if (username == null || password == null || confirm_password == null) return false;
 
-            User user = new User(username, password, name);
+            User user = new User(username, password, name, lastName, middleName);
             bool result = DatabaseManager.AddUser(user);
             return result;
+        }
+
+        public static List<Package> GetPackages()
+        {
+            var packages = new List<Package>();
+
+            if (!File.Exists(packagePath)) return packages;
+
+            string existingData = File.ReadAllText(packagePath);
+            packages = JsonSerializer.Deserialize<List<Package>>(existingData) ?? new List<Package>();
+
+            return packages;
+        }
+
+        public static List<User> GetUsers()
+        {
+            var users = new List<User>();
+
+            if (!File.Exists(userPath)) return users;
+
+            string existingData = File.ReadAllText(userPath);
+            users = JsonSerializer.Deserialize<List<User>>(existingData) ?? new List<User>();
+
+            return users;
         }
     }
 }

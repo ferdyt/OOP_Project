@@ -11,5 +11,6 @@ namespace OOP_Project
         static abstract bool AddPackage(Package package);
         static abstract List<Package> GetPackagesByUser(string userLogin);
         static abstract bool UpdatePackage(Package package, Guid id);
+        static abstract List<Package> GetPackages();
     }
 }

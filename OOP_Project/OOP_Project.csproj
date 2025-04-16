@@ -14,10 +14,14 @@
     <None Remove="Resources\back.png" />
     <None Remove="Resources\confirm.png" />
     <None Remove="Resources\info.png" />
+    <None Remove="Resources\moon.png" />
     <None Remove="Resources\remove.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Resources\moon.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Resources\remove.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>

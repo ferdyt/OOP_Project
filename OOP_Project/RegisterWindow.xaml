@@ -19,16 +19,23 @@
     </Page.Triggers>
 
     <Grid>
-        <Grid Margin="-13,-35,0,0" x:Name="RegistrationPage" Width="484" Height="375" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="1">
+        <Grid Margin="-13,-35,0,0" x:Name="RegistrationPage" Width="484" Height="585
+              " HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="1">
             <Rectangle Fill="White" RadiusX="8" RadiusY="8"/>
             <Grid Margin="24,20,24,20">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="20"/>
+                    <RowDefinition Height="10"/>
                     <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="20"/>
+                    <RowDefinition Height="10"/>
                     <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="10"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="10"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="10"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="10"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
                 <StackPanel Grid.Row="0">
@@ -43,7 +50,21 @@
                     <Label Content="Повтор паролю" FontSize="16"/>
                     <PasswordBox x:Name="RepeatPasswordTextBox" Height="40" Style="{StaticResource PassBox}"/>
                 </StackPanel>
-                <Button x:Name="RegisterButton" Grid.Row="6" Content="Реєстрація" Height="40" Style="{StaticResource DarkButton}"/>
+                <StackPanel Grid.Row="6">
+                    <Label Content="Ім'я" FontSize="16"/>
+                    <TextBox x:Name="NameTextBox" Height="40" Style="{StaticResource TextBoxStyle}"/>
+                </StackPanel>
+                <StackPanel Grid.Row="8">
+                    <Label Content="Прізвище" FontSize="16"/>
+                    <TextBox x:Name="LastNameTextBox" Height="40" Style="{StaticResource TextBoxStyle}"/>
+                </StackPanel>
+                <StackPanel Grid.Row="10">
+                    <Label Content="По батькові" FontSize="16"/>
+                    <TextBox x:Name="MiddleNameTextBox" Height="40" Style="{StaticResource TextBoxStyle}"/>
+                </StackPanel>
+                <StackPanel Grid.Row="12">
+                    <Button x:Name="RegisterButton" Grid.Row="6" Content="Реєстрація" Height="40" Style="{StaticResource DarkButton}"/>
+                </StackPanel>
             </Grid>
             <Button x:Name="BackButton" Style="{StaticResource BackButton}" Content="Назад" Tag="pack://application:,,,/Resources/back.png" Click="BackButton_Click" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="-80,0,0,0"/>
         </Grid>

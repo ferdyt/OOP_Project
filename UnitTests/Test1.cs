@@ -17,7 +17,7 @@ namespace UnitTests
 
             try
             {
-                User user = new("Julian_123", "123123", "Julian");
+                User user = new("Julian_123", "123123", "Julian", "Whitmore", "Alexander");
                 List<User> users = new List<User>();
 
                 try { DatabaseManager.AddUser(user); }
@@ -38,7 +38,7 @@ namespace UnitTests
 
             try
             {
-                User user = new("", "123123", "");
+                User user = new("", "123123", "", "", "");
                 List<User> users = new List<User>();
 
                 try { DatabaseManager.AddUser(user); }
@@ -59,7 +59,7 @@ namespace UnitTests
 
             try
             {
-                User user = new(null, "123123", null);
+                User user = new(null, "123123", null, null, null);
                 List<User> users = new List<User>();
 
                 try { DatabaseManager.AddUser(user); }
@@ -80,7 +80,7 @@ namespace UnitTests
 
             try
             {
-                User user = new("h", "123123", "h");
+                User user = new("h", "123123", "h", "p", "r");
                 List<User> users = new List<User>();
 
                 try { DatabaseManager.AddUser(user); }
@@ -101,7 +101,7 @@ namespace UnitTests
 
             try
             {
-                User user = new("Yan49", "123123", "Yan");
+                User user = new("Yan49", "123123", "Yan", "Kovalenko", "Mikhailovich");
 
                 try { DatabaseManager.AddUser(user); }
                 catch (Exception ex) { Console.WriteLine(ex.Message); }
@@ -110,7 +110,7 @@ namespace UnitTests
 
                 Assert.IsTrue(res);
             }
-            finally { fileMutex?.ReleaseMutex(); }
+            finally { fileMutex?.ReleaseMutex();}
         }
 
         [TestMethod]
@@ -120,8 +120,8 @@ namespace UnitTests
 
             try
             {
-                User sender = new("Kein22", "123123", "Kein");
-                User receiver = new("Lukasss", "123123", "Lukas");
+                User sender = new("Kein22", "123123", "Kein", "Darnell", "Everett");
+                User receiver = new("Lukasss", "123123", "Lukas", "Reinhardt", "Johann");
                 List<Package> packages = new List<Package>();
 
                 try { DatabaseManager.AddUser(sender); }
@@ -130,7 +130,7 @@ namespace UnitTests
                 try { DatabaseManager.AddUser(receiver); }
                 catch (Exception ex) { Console.WriteLine(ex.Message); }
 
-                Package package = new(Guid.NewGuid(), sender.login, receiver.login, "в дорозі", 12, 1500, false);
+                Package package = new(Guid.NewGuid(), sender.login, receiver.login, "в дорозі", 12, 1500, false, "Kharkiv", "Kyiv", 76);
 
                 try { bool res = DatabaseManager.AddPackage(package); }
                 catch (Exception ex) { Console.WriteLine(ex.Message); }
@@ -150,8 +150,8 @@ namespace UnitTests
 
             try
             {
-                User sender = new("Kein22", "123123", "Kein");
-                User receiver = new("Lukasss", "123123", "Lukas");
+                User sender = new("Kein22", "123123", "Kein", "Darnell", "Everett");
+                User receiver = new("Lukasss", "123123", "Lukas", "Reinhardt", "Johann");
                 List<Package> packages = new List<Package>();
 
                 try { DatabaseManager.AddUser(sender); }
@@ -160,7 +160,7 @@ namespace UnitTests
                 try { DatabaseManager.AddUser(receiver); }
                 catch (Exception ex) { Console.WriteLine(ex.Message); }
 
-                Package package = new(Guid.NewGuid(), sender.login, receiver.login, "в дорозі", 12, 1500, true);
+                Package package = new(Guid.NewGuid(), sender.login, receiver.login, "в дорозі", 12, 1500, true, "Kharkiv", "Kyiv", 24);
 
                 try { bool res = DatabaseManager.AddPackage(package); }
                 catch (Exception ex) { Console.WriteLine(ex.Message); }
@@ -170,7 +170,7 @@ namespace UnitTests
 
                 Assert.IsFalse(packages.Exists(p => p.id == package.id));
             }
-            finally { fileMutex?.ReleaseMutex(); }
+            finally { fileMutex?.ReleaseMutex();     }
         }
 
         [TestMethod]
@@ -180,8 +180,8 @@ namespace UnitTests
 
             try
             {
-                User sender = new("Kein22", "123123", "Kein");
-                User receiver = new("Lukasss", "123123", "Lukas");
+                User sender = new("Kein22", "123123", "Kein", "Darnell", "Everett");
+                User receiver = new("Lukasss", "123123", "Lukas", "Reinhardt", "Johann");
                 List<Package> packages = new List<Package>();
 
                 try { DatabaseManager.AddUser(sender); }
@@ -190,7 +190,7 @@ namespace UnitTests
                 try { DatabaseManager.AddUser(receiver); }
                 catch (Exception ex) { Console.WriteLine(ex.Message); }
 
-                Package package = new(Guid.NewGuid(), sender.login, receiver.login, "в дорозі", 0, 500, true);
+                Package package = new(Guid.NewGuid(), sender.login, receiver.login, "в дорозі", 0, 500, true, "Kharkiv", "Kyiv", 24);
 
                 try { bool res = DatabaseManager.AddPackage(package); }
                 catch (Exception ex) { Console.WriteLine(ex.Message); }
@@ -211,10 +211,10 @@ namespace UnitTests
             try
             {
                 Guid testId = Guid.NewGuid();
-                Package initial = new(testId, "Kein22", "Lukasss", "в дорозі", 12, 1450, false);
+                Package initial = new(testId, "Kein22", "Lukasss", "в дорозі", 12, 1450, false, "Kharkiv", "Lviv", 1);
                 DatabaseManager.AddPackage(initial);
 
-                Package updated = new(testId, "Kein22", "Lukasss", "доставлено", 12, 1450, false);
+                Package updated = new(testId, "Kein22", "Lukasss", "доставлено", 12, 1450, false, "Kharkiv", "Lviv", 1);
                 bool res = DatabaseManager.UpdatePackage(updated, testId);
             }
             finally { fileMutex.ReleaseMutex(); }
@@ -237,7 +237,7 @@ namespace UnitTests
 
                 Assert.IsNotNull(packages);
             }
-            finally { fileMutex.ReleaseMutex();}
+            finally { fileMutex.ReleaseMutex();  }
         }
 
         [TestMethod]
@@ -268,7 +268,7 @@ namespace UnitTests
 
                 Assert.IsNotNull(users);
             }
-            finally { fileMutex.ReleaseMutex(); }
+            finally { fileMutex.ReleaseMutex();}
         }
 
         [TestMethod]
@@ -280,11 +280,11 @@ namespace UnitTests
             {
                 DatabaseManager.DelUser("PabloTax");
 
-                bool res = DatabaseManager.Register("PabloTax", "123123", "123123", "Pablo");
+                bool res = DatabaseManager.Register("PabloTax", "123123", "123123", "Pablo", "Morales", "Enriquez");
 
                 Assert.IsTrue(res);
             }
-            finally { fileMutex.ReleaseMutex(); }
+            finally { fileMutex.ReleaseMutex();}
         }
 
         [TestMethod]
@@ -294,11 +294,11 @@ namespace UnitTests
 
             try
             {
-                bool res = DatabaseManager.Register("PabloTax", "", "", "Pablo");
+                bool res = DatabaseManager.Register("PabloTax", "", "", "Pablo", "Morales", "Enriquez");
 
                 Assert.IsFalse(res);
             }
-            finally { fileMutex.ReleaseMutex(); }
+            finally { fileMutex.ReleaseMutex();  }
         }
 
         [TestMethod]
@@ -308,7 +308,7 @@ namespace UnitTests
 
             try
             {
-                bool res = DatabaseManager.Register("PabloTax", null, null, "Pablo");
+                bool res = DatabaseManager.Register("PabloTax", null, null, "Pablo", "Morales", "Enriquez");
 
                 Assert.IsFalse(res);
             }
@@ -322,7 +322,7 @@ namespace UnitTests
 
             try
             {
-                bool res = DatabaseManager.Register("PabloTax", "123", "123", "Pablo");
+                bool res = DatabaseManager.Register("PabloTax", "123", "123", "Pablo", "Morales", "Enriquez");
 
                 Assert.IsFalse(res);
             }
@@ -332,9 +332,15 @@ namespace UnitTests
         [TestMethod]
         public void CorrectAuthorisation()
         {
-            bool res = DatabaseManager.Login("PabloTax", "123123");
+            fileMutex.WaitOne();
 
-            Assert.IsTrue(res);
+            try
+            {
+                bool res = DatabaseManager.Login("PabloTax", "123123");
+
+                Assert.IsTrue(res);
+            }
+            finally { fileMutex.ReleaseMutex();}
         }
     }
 }

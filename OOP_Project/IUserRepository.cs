@@ -10,7 +10,7 @@ namespace OOP_Project
     {
         static abstract bool DelUser(string login);
         static abstract bool AddUser(User user);
-        static abstract User GetUserByLogin(string login);
-        static abstract List<User> GetAllUsers();
+        static abstract User? GetUserByLogin(string login);
+        static abstract List<User> GetUsers();
     }
 }
