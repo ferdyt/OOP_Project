@@ -111,5 +111,51 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <Style x:Key="BorderStatus" TargetType="Border">
+            <Setter Property="BorderBrush" Value="Gray"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding status}" Value="У відділенні">
+                    <Setter Property="BorderBrush" Value="Green"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding status}" Value="Скасовано">
+                    <Setter Property="BorderBrush" Value="Red"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding status}" Value="В дорозі">
+                    <Setter Property="BorderBrush" Value="Black"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="CustomRadioButton" TargetType="RadioButton">
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RadioButton">
+                        <StackPanel Orientation="Horizontal" Margin="5">
+                            <Grid Width="20" Height="20" Margin="0 0 8 0">
+                                <Ellipse Stroke="Gray" StrokeThickness="2"/>
+                                <Ellipse x:Name="CheckedDot" Fill="#0078D7" Width="10" Height="10" Visibility="Hidden" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Grid>
+
+                            <ContentPresenter VerticalAlignment="Center"/>
+
+                        </StackPanel>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="CheckedDot" Property="Visibility" Value="Visible"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" Value="0.5"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Cursor" Value="Hand"/>
+                                <Setter TargetName="CheckedDot" Property="Fill" Value="#3399FF"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Application.Resources>
 </Application>

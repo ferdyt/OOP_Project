@@ -31,7 +31,7 @@
                 <PasswordBox x:Name="PasswordTextBox" Width="436" HorizontalAlignment="Left" FontSize="16" AutomationProperties.Name="passwordTextBox" Height="40" Style="{StaticResource PassBox}"/>
             </StackPanel>
             <Button x:Name="RegisterButton" Content="Реєстрація" Background="Transparent" BorderThickness="0" Foreground="Black" FontSize="16" Cursor="Hand" Margin="10,-100,0,0" Padding="0" HorizontalAlignment="Center" VerticalAlignment="Top" Click="RegisterButton_Click" Style="{StaticResource UnderlineButton}"/>
-            <Button x:Name="LoginButton" Content="Увійти" Height="40" Width="437" Margin="0,-70,0,0" Style="{StaticResource ResourceKey=RedButton}"/>
+            <Button x:Name="LoginButton" Content="Увійти" Height="40" Width="437" Margin="0,-70,0,0" Style="{StaticResource ResourceKey=RedButton}" Click="LoginButton_Click"/>
             <Button x:Name="GuestButton" Content="Увійти як гість" Width="180" Height="40" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,5,0,0" Style="{StaticResource ResourceKey=DarkButton}" FontSize="16" Click="GuestButton_Click"/>
         </StackPanel>
     </Grid>
