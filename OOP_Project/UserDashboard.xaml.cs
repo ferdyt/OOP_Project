@@ -14,17 +14,15 @@ namespace OOP_Project
         public ObservableCollection<Package> Packages { get; set; }
         private Frame _mainFrame;
 
-        private string seancePath = "C:/Users/Csgo2/Source/Repos/OOP_Project/OOP_Project/Databases/Current.json";
         private string seance;
 
         public UserDashboard(string userLogin, Frame mainFrame)
         {
             InitializeComponent();
 
-            seance = JsonSerializer.Serialize(userLogin);
-            File.WriteAllText(seancePath, seance);
+            UserRepository.WriteSeance(userLogin);
 
-            var list = DatabaseManager.GetPackagesByUser(userLogin);
+            var list = PackageRepository.GetPackagesByUser(userLogin);
             Packages = new ObservableCollection<Package>(list);
 
             this.DataContext = this;
@@ -35,10 +33,11 @@ namespace OOP_Project
         {
             InitializeComponent();
 
-            string userLogin = File.ReadAllText(seancePath);
-            userLogin = JsonSerializer.Deserialize<string>(userLogin);
+            string? userLogin;
 
-            var list = DatabaseManager.GetPackagesByUser(userLogin);
+            userLogin = UserRepository.GetSeance();
+
+            var list = PackageRepository.GetPackagesByUser(userLogin);
             Packages = new ObservableCollection<Package>(list);
 
             this.DataContext = this;
@@ -47,7 +46,7 @@ namespace OOP_Project
 
         private void CreatePackageButton_Click(object sender, RoutedEventArgs e)
         {
-            var createPackagePage = new CreatePackageForm(_mainFrame);
+            var createPackagePage = new CreatePackageForm(_mainFrame, false);
             _mainFrame.Navigate(createPackagePage);
         }
 
@@ -56,26 +55,45 @@ namespace OOP_Project
             var authPage = new AuthForm(_mainFrame);
             _mainFrame.Navigate(authPage);
         }
-    }
 
-    public class CountToVisibilityConverter : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        private void CreatePackageWithMoneyOrDocButton_Click(object sender, RoutedEventArgs e)
         {
-            int count = (int)value;
-            string mode = parameter as string;
-
-            if (mode == "HasItems")
-                return count > 0 ? Visibility.Visible : Visibility.Collapsed;
-            if (mode == "NoItems")
-                return count == 0 ? Visibility.Visible : Visibility.Collapsed;
-
-            return Visibility.Visible;
+            var createPackagePage = new CreatePackageForm(_mainFrame, true);
+            _mainFrame.Navigate(createPackagePage);
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        private void DetailButton_Click(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            User? userSender;
+            User? userReceiver;
+
+            Button button = sender as Button;
+
+            if (button != null && button.Tag is Package package)
+            {
+                userSender = UserRepository.GetUserByLogin(package.senderLogin);
+                userReceiver = UserRepository.GetUserByLogin(package.receiverLogin);
+
+                MessageBoxResult result = MessageBox.Show(
+                    $"Відправник: {userSender.Name} {userSender.MiddleName} {userSender.LastName}\n" +
+                    $"Місто відправлення: {package.senderCity}\n" +
+                    $"Отримувач: {userReceiver.Name} {userReceiver.MiddleName} {userReceiver.LastName}\n" +
+                    $"Місто отримання: {package.receiverCity}\n" +
+                    $"Статус: {package.status}\n" +
+                    $"Вага: {package.weight} кг\n" +
+                    $"Вартість: {package.cost} грн\n" +
+                    $"Документ: {(package.isDockument ? "Так" : "Ні")}\n" +
+                    $"Відділення: {package.postOffice}",
+                    "Інформація про посилку",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Information);
+            }
+        }
+
+        private void StatusPackageButton_Click(object sender, RoutedEventArgs e)
+        {
+            var trackingPage = new TrackingForm(_mainFrame);
+            _mainFrame.Navigate(trackingPage);
         }
     }
 }

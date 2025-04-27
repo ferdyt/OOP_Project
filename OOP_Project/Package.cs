@@ -14,13 +14,13 @@ namespace OOP_Project
         public string senderCity { get; }
         public string receiverLogin { get; }
         public string receiverCity { get; }
-        public string status { get; }
+        public PackageStatus status { get; set; }
         public float weight { get; }
         public int cost { get; }
         public bool isDockument { get; }
         public int postOffice { get; }
 
-        public Package(Guid id, string senderLogin, string receiverLogin, string status, float weight, int cost, bool isDockument, string senderCity, string receiverCity, int postOffice)
+        public Package(Guid id, string senderLogin, string receiverLogin, PackageStatus status, float weight, int cost, bool isDockument, string senderCity, string receiverCity, int postOffice)
         {
             this.id = id;
             this.senderLogin = senderLogin;

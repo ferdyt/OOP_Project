@@ -22,9 +22,25 @@ namespace OOP_Project
     {
         private Frame _mainFrame;
 
-        public CreatePackageForm(Frame mainFrame)
+        public CreatePackageForm(Frame mainFrame, bool isMoneyOrDoc)
         {
             InitializeComponent();
+
+            if (isMoneyOrDoc)
+            {
+                TittleCreatePackage.Content = "Створити документ/гроші";
+                IsMoneyOrDocCheckBox.IsChecked = true;
+                IsMoneyOrDocCheckBox.IsEnabled = false;
+                WeightTextBox.IsEnabled = false;
+                WeightTextBox.BorderBrush = new SolidColorBrush(Colors.White);
+            }
+            else
+            {
+                TittleCreatePackage.Content = "Створити посилку";
+                IsMoneyOrDocCheckBox.IsChecked = false;
+                IsMoneyOrDocCheckBox.IsEnabled = false;
+            }
+
             _mainFrame = mainFrame;
         }
 
@@ -36,7 +52,61 @@ namespace OOP_Project
 
         private void CreateButton_Click(object sender, RoutedEventArgs e)
         {
+            if (string.IsNullOrWhiteSpace(ReceiverTextBox.Text) || string.IsNullOrEmpty(SenderCityTextBox.Text) ||
+                string.IsNullOrWhiteSpace(ReceiverCityTextBox.Text) || string.IsNullOrWhiteSpace(WeightTextBox.Text) ||
+                string.IsNullOrWhiteSpace(PriceTextBox.Text) || string.IsNullOrWhiteSpace(PostOfficeTextBox.Text))
+            {
+                MessageBox.Show("Заповніть всі поля!");
+                return;
+            }
 
+            if (!double.TryParse(WeightTextBox.Text, out double weight) || weight <= 0)
+            {
+                MessageBox.Show("Введіть коректну вагу!");
+                return;
+            }
+
+            if (!int.TryParse(PriceTextBox.Text, out int price) || price <= 0)
+            {
+                MessageBox.Show("Введіть коректну ціну!");
+                return;
+            }
+
+            User? user = UserRepository.GetUserByLogin(ReceiverTextBox.Text);
+
+            if (user == null)
+            {
+                MessageBox.Show("Отримувача не знайдено!");
+                return;
+            }
+
+            if (!int.TryParse(PostOfficeTextBox.Text, out int postOffice) || postOffice <= 0)
+            {
+                MessageBox.Show("Введіть коректне відділення!");
+                return;
+            }
+
+            if (UserRepository.GetSeance() == ReceiverTextBox.Text)
+            {
+                MessageBox.Show("Ви не можете відправити посилку самі собі!");
+                return;
+            }
+
+            Package package = new Package(
+                Guid.NewGuid(),
+                UserRepository.GetSeance(),
+                ReceiverTextBox.Text,
+                PackageStatus.InTransit,
+                (float)weight,
+                price,
+                (bool)IsMoneyOrDocCheckBox.IsChecked,
+                SenderCityTextBox.Text,
+                ReceiverCityTextBox.Text,
+                postOffice
+                );
+
+            PackageRepository.AddPackage(package);
+            _mainFrame.Navigate(new UserDashboard(UserRepository.GetSeance(), _mainFrame));
         }
     }
 }

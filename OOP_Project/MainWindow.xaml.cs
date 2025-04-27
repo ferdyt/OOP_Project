@@ -20,6 +20,9 @@ public partial class MainWindow : Window
 {
     public MainWindow()
     {
+        if (File.Exists(AuthForm.seancePath))
+            File.Delete(AuthForm.seancePath);
+
         InitializeComponent();
         MainFrame.Navigate(new AuthForm(MainFrame));
     }

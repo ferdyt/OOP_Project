@@ -27,7 +27,7 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <Label Grid.Row="0" Content="Введіть ТТН щоб перевірити статус посилки" FontSize="16" HorizontalAlignment="Center" Margin="0,0,0,10"/>
+        <Label Grid.Row="0" Content="Введіть айді щоб перевірити статус посилки" FontSize="16" HorizontalAlignment="Center" Margin="0,0,0,10"/>
 
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
@@ -37,14 +37,14 @@
 
             <TextBox x:Name="InvoiceTextBox" Grid.Column="0" Width="340" Height="38" Style="{StaticResource ResourceKey=TextBoxStyle}" HorizontalAlignment="Left"/>
 
-            <Button x:Name="OKButton" Grid.Column="1" Width="84" Height="38" Style="{StaticResource ResourceKey=DarkButton}" Content="OK" Margin="10,0,0,0"/>
+            <Button x:Name="OKButton" Grid.Column="1" Width="84" Height="38" Style="{StaticResource ResourceKey=DarkButton}" Content="OK" Margin="10,0,0,0" Click="OKButton_Click"/>
         </Grid>
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="59*"/>
                 <ColumnDefinition Width="378*"/>
             </Grid.ColumnDefinitions>
-            <Label x:Name="OutputLabel" Content="Test" FontSize="16" HorizontalAlignment="Left" Grid.Column="1" Margin="141,0,0,0"/>
+            <Label x:Name="OutputLabel" Content="" FontSize="16" HorizontalAlignment="Center" Grid.Column="1" Margin="-50,0,0,0"/>
         </Grid>
         <Grid Grid.Row="3">
             <Button x:Name="PersonalAccountButton" Content="Особистий кабінет" Width="173" Height="40" HorizontalAlignment="Center" VerticalAlignment="Bottom" Style="{StaticResource ResourceKey=DarkButton}" Click="PersonalAccountButton_Click"/>

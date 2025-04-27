@@ -27,8 +27,10 @@ namespace OOP_Project
     {
         private Frame _mainFrame;
 
-        private string seancePath = "C:/Users/Csgo2/Source/Repos/OOP_Project/OOP_Project/Databases/Current.json";
+        public static string seancePath = "C:/Users/Csgo2/Source/Repos/OOP_Project/OOP_Project/Databases/Current.json";
         private string seance;
+        SolidColorBrush gray = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#D9D9D9"));
+
         public AuthForm(Frame mainFrame)
         {
             InitializeComponent();
@@ -58,7 +60,14 @@ namespace OOP_Project
             string userLogin = LoginTextBox.Text;
             string userPassword = PasswordTextBox.Password;
 
-            bool isLogin = DatabaseManager.Login(userLogin, userPassword);
+            if (userLogin == "admin" && userPassword == "admin")
+            {
+                var adminDashboard = new AdminDashBoard(_mainFrame);
+                _mainFrame.Navigate(adminDashboard);
+                return;
+            }
+
+            bool isLogin = LoginService.Login(userLogin, userPassword);
 
             if (isLogin)
             {
@@ -70,7 +79,13 @@ namespace OOP_Project
             }
             else
             {
+                LoginTextBox.BorderBrush = Brushes.Red;
+                PasswordTextBox.BorderBrush = Brushes.Red;
                 MessageBox.Show("Невірний логін або пароль");
+                LoginTextBox.BorderBrush = gray;
+                PasswordTextBox.BorderBrush = gray;
+                LoginTextBox.Clear();
+                PasswordTextBox.Clear();
                 return;
             }
         }

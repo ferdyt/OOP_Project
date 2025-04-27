@@ -43,5 +43,43 @@ namespace OOP_Project
                 _mainFrame.Navigate(userDashBoard);
             }
         }
+
+        private void OKButton_Click(object sender, RoutedEventArgs e)
+        {
+            Package package = null; // Initialize the variable to avoid CS0165
+
+            if (Guid.TryParse(InvoiceTextBox.Text, out Guid packageId))
+            {
+                package = PackageRepository.GetPackageById(packageId);
+            }
+            else
+            {
+                MessageBox.Show("Некоректний айді посилки");
+            }
+
+            if (package != null)
+            {
+                if (package.status == PackageStatus.Canceled)
+                {
+                    OutputLabel.Foreground = System.Windows.Media.Brushes.Red;
+                    OutputLabel.Content = "Посилка скасована";
+                }
+                else if (package.status == PackageStatus.Delivered)
+                {
+                    OutputLabel.Foreground = System.Windows.Media.Brushes.Green;
+                    OutputLabel.Content = "Посилка доставлена";
+                }
+                else if (package.status == PackageStatus.InTransit)
+                {
+                    OutputLabel.Foreground = System.Windows.Media.Brushes.DarkOrange;
+                    OutputLabel.Content = "Посилка в дорозі";
+                }
+            }
+            else
+            {
+                OutputLabel.Foreground = System.Windows.Media.Brushes.Black;
+                OutputLabel.Content = "Посилка не знайдена";
+            }
+        }
     }
 }

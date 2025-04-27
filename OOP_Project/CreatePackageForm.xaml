@@ -11,42 +11,38 @@
 
     <Grid>
         <Rectangle Width="500" HorizontalAlignment="Center" VerticalAlignment="Center" Fill="White" RadiusX="8" RadiusY="8" Height="400"/>
-        <Label Content="Створити посилку" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="20" Margin="0,181,0,0"/>
+        <Label x:Name="TittleCreatePackage" Content="Створити посилку" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="20" Margin="0,181,0,0"/>
         <Grid Width="500" VerticalAlignment="Center" HorizontalAlignment="Center">
             <Grid.RowDefinitions>
                 <RowDefinition Height="40"/>
-                <RowDefinition Height="40"/>
-                <RowDefinition Height="40"/>
-                <RowDefinition Height="40"/>
-                <RowDefinition Height="40"/>
-                <RowDefinition Height="40"/>
-                <RowDefinition Height="40"/>
-                <RowDefinition Height="40"/>
-                <RowDefinition Height="40"/>
-                <RowDefinition Height="40"/>
+                <RowDefinition Height="45"/>
+                <RowDefinition Height="45"/>
+                <RowDefinition Height="45"/>
+                <RowDefinition Height="45"/>
+                <RowDefinition Height="45"/>
+                <RowDefinition Height="45"/>
+                <RowDefinition Height="45"/>
+                <RowDefinition Height="45"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Label Content="Логін відправника" Grid.Row="1" Grid.Column="0" FontSize="16" Margin="10,0,0,0"/>
-            <TextBox x:Name="SenderTextBox" Grid.Row="1" Grid.Column="1" Margin="10,0,10,0" Height="30" Style="{StaticResource TextBoxStyle}"/>
-            <Label Content="Логін отримувача" Grid.Row="2" Grid.Column="0" FontSize="16" Margin="10,0,0,0"/>
-            <TextBox x:Name="ReceiverTextBox" Grid.Row="2" Grid.Column="1" Margin="10,0,10,0" Height="30" Style="{StaticResource TextBoxStyle}"/>
-            <Label Content="Місто відправника" Grid.Row="3" Grid.Column="0" FontSize="16" Margin="10,0,0,0"/>
-            <TextBox x:Name="SenderCityTextBox" Grid.Row="3" Grid.Column="1" Margin="10,0,10,0" Height="30" Style="{StaticResource TextBoxStyle}"/>
-            <Label Content="Місто отримувача" Grid.Row="4" Grid.Column="0" FontSize="16" Margin="10,0,0,0"/>
-            <TextBox x:Name="ReceiverCityTextBox" Grid.Row="4" Grid.Column="1" Margin="10,0,10,0" Height="30" Style="{StaticResource TextBoxStyle}"/>
-            <Label Content="Вага (кг)" Grid.Row="5" Grid.Column="0" FontSize="16" Margin="10,0,0,0"/>
-            <TextBox x:Name="WeightTextBox" Grid.Row="5" Grid.Column="1" Margin="10,0,10,0" Height="30" Style="{StaticResource TextBoxStyle}"/>
-            <Label Content="Очікувана вартість (грн)" Grid.Row="6" Grid.Column="0" FontSize="16" Margin="10,0,0,0"/>
-            <TextBox x:Name="PriceTextBox" Grid.Row="6" Grid.Column="1" Margin="10,0,10,0" Height="30" Style="{StaticResource TextBoxStyle}"/>
-            <Label Content="Відділення" Grid.Row="7" Grid.Column="0" Margin="10,0,0,0" FontSize="16"/>
-            <TextBox x:Name="PostOfficeTextBox" Grid.Row="7" Grid.Column="1" Margin="10,0,10,0" Height="30" Style="{StaticResource TextBoxStyle}"/>
-            <RadioButton Content="Гроші/документи" Grid.Row="8" Grid.Column="0" FontSize="16" Margin="10,0,0,0" Style="{StaticResource ResourceKey=CustomRadioButton}" GroupName="group1"/>
-            <RadioButton Content="Гроші/документи" Grid.Row="8" Grid.Column="0" FontSize="16" Margin="10,0,0,0" Style="{StaticResource ResourceKey=CustomRadioButton}" GroupName="group1"/>
-            <Button x:Name="CreateButton" Content="Створити" Grid.Row="9" Margin="10,0,10,5" Height="30" Style="{StaticResource ResourceKey=DarkButton}" Grid.ColumnSpan="2" Click="CreateButton_Click"/>
+            <Label Content="Логін отримувача" Grid.Row="1" Grid.Column="0" FontSize="16" Margin="10,0,0,0"/>
+            <TextBox x:Name="ReceiverTextBox" Grid.Row="1" Grid.Column="1" Margin="10,0,10,0" Height="40" Style="{StaticResource TextBoxStyle}"/>
+            <Label Content="Місто відправника" Grid.Row="2" Grid.Column="0" FontSize="16" Margin="10,0,0,0"/>
+            <TextBox x:Name="SenderCityTextBox" Grid.Row="2" Grid.Column="1" Margin="10,0,10,0" Height="40" Style="{StaticResource TextBoxStyle}"/>
+            <Label Content="Місто отримувача" Grid.Row="3" Grid.Column="0" FontSize="16" Margin="10,0,0,0"/>
+            <TextBox x:Name="ReceiverCityTextBox" Grid.Row="3" Grid.Column="1" Margin="10,0,10,0" Height="40" Style="{StaticResource TextBoxStyle}"/>
+            <Label Content="Вага (кг)" Grid.Row="4" Grid.Column="0" FontSize="16" Margin="10,0,0,0"/>
+            <TextBox x:Name="WeightTextBox" Grid.Row="4" Grid.Column="1" Margin="10,0,10,0" Height="40" Style="{StaticResource TextBoxStyle}"/>
+            <Label Content="Очікувана вартість (грн)" Grid.Row="5" Grid.Column="0" FontSize="16" Margin="10,0,0,0"/>
+            <TextBox x:Name="PriceTextBox" Grid.Row="5" Grid.Column="1" Margin="10,0,10,0" Height="40" Style="{StaticResource TextBoxStyle}"/>
+            <Label Content="Відділення" Grid.Row="6" Grid.Column="0" Margin="10,0,0,0" FontSize="16"/>
+            <TextBox x:Name="PostOfficeTextBox" Grid.Row="6" Grid.Column="1" Margin="10,0,10,0" Height="40" Style="{StaticResource TextBoxStyle}"/>
+            <CheckBox x:Name="IsMoneyOrDocCheckBox" Content="Гроші/Документи" IsChecked="False" Grid.Row="7" Grid.Column="0" FontSize="16" Margin="15,5,0,0"/>
+            <Button x:Name="CreateButton" Content="Створити" Grid.Row="8" Margin="10,0,10,5" Height="40" Style="{StaticResource ResourceKey=DarkButton}" Grid.ColumnSpan="2" Click="CreateButton_Click"/>
+            <Button x:Name="BackButton" Content="Назад" Style="{StaticResource BackButton}" Tag="pack://application:,,,/Resources/back.png" Width="73" Height="30" Click="BackButton_Click" Margin="-71,0,0,0" />
         </Grid>
-        <Button x:Name="BackButton" Content="Назад" Style="{StaticResource BackButton}" Tag="pack://application:,,,/Resources/back.png" Width="73" Height="30" Margin="277,178,0,0" Click="BackButton_Click"/>
     </Grid>
 </Page>

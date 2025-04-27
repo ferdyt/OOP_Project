@@ -20,7 +20,7 @@ namespace UnitTests
                 User user = new("Julian_123", "123123", "Julian", "Whitmore", "Alexander");
                 List<User> users = new List<User>();
 
-                try { DatabaseManager.AddUser(user); }
+                try { UserRepository.AddUser(user); }
                 catch (Exception ex) { Console.WriteLine(ex.Message); }
 
                 string existingData = File.ReadAllText(userDBPath);
@@ -41,7 +41,7 @@ namespace UnitTests
                 User user = new("", "123123", "", "", "");
                 List<User> users = new List<User>();
 
-                try { DatabaseManager.AddUser(user); }
+                try { UserRepository.AddUser(user); }
                 catch (Exception ex) { Console.WriteLine(ex.Message); }
 
                 string existingData = File.ReadAllText(userDBPath);
@@ -62,7 +62,7 @@ namespace UnitTests
                 User user = new(null, "123123", null, null, null);
                 List<User> users = new List<User>();
 
-                try { DatabaseManager.AddUser(user); }
+                try { UserRepository.AddUser(user); }
                 catch (Exception ex) { Console.WriteLine(ex.Message); }
 
                 string existingData = File.ReadAllText(userDBPath);
@@ -83,7 +83,7 @@ namespace UnitTests
                 User user = new("h", "123123", "h", "p", "r");
                 List<User> users = new List<User>();
 
-                try { DatabaseManager.AddUser(user); }
+                try { UserRepository.AddUser(user); }
                 catch (Exception ex) { Console.WriteLine(ex.Message); }
 
                 string existingData = File.ReadAllText(userDBPath);
@@ -103,10 +103,10 @@ namespace UnitTests
             {
                 User user = new("Yan49", "123123", "Yan", "Kovalenko", "Mikhailovich");
 
-                try { DatabaseManager.AddUser(user); }
+                try { UserRepository.AddUser(user); }
                 catch (Exception ex) { Console.WriteLine(ex.Message); }
 
-                bool res = DatabaseManager.DelUser("Yan49");
+                bool res = UserRepository.DelUser("Yan49");
 
                 Assert.IsTrue(res);
             }
@@ -124,15 +124,15 @@ namespace UnitTests
                 User receiver = new("Lukasss", "123123", "Lukas", "Reinhardt", "Johann");
                 List<Package> packages = new List<Package>();
 
-                try { DatabaseManager.AddUser(sender); }
+                try { UserRepository.AddUser(sender); }
                 catch (Exception ex) { Console.WriteLine(ex.Message); }
 
-                try { DatabaseManager.AddUser(receiver); }
+                try { UserRepository.AddUser(receiver); }
                 catch (Exception ex) { Console.WriteLine(ex.Message); }
 
-                Package package = new(Guid.NewGuid(), sender.login, receiver.login, "в дорозі", 12, 1500, false, "Kharkiv", "Kyiv", 76);
+                Package package = new(Guid.NewGuid(), sender.login, receiver.login, PackageStatus.InTransit, 12, 1500, false, "Kharkiv", "Kyiv", 76);
 
-                try { bool res = DatabaseManager.AddPackage(package); }
+                try { bool res = PackageRepository.AddPackage(package); }
                 catch (Exception ex) { Console.WriteLine(ex.Message); }
 
                 string existingData = File.ReadAllText(packageDBPath);
@@ -154,15 +154,15 @@ namespace UnitTests
                 User receiver = new("Lukasss", "123123", "Lukas", "Reinhardt", "Johann");
                 List<Package> packages = new List<Package>();
 
-                try { DatabaseManager.AddUser(sender); }
+                try { UserRepository.AddUser(sender); }
                 catch (Exception ex) { Console.WriteLine(ex.Message); }
 
-                try { DatabaseManager.AddUser(receiver); }
+                try { UserRepository.AddUser(receiver); }
                 catch (Exception ex) { Console.WriteLine(ex.Message); }
 
-                Package package = new(Guid.NewGuid(), sender.login, receiver.login, "в дорозі", 12, 1500, true, "Kharkiv", "Kyiv", 24);
+                Package package = new(Guid.NewGuid(), sender.login, receiver.login, PackageStatus.InTransit, 12, 1500, true, "Kharkiv", "Kyiv", 24);
 
-                try { bool res = DatabaseManager.AddPackage(package); }
+                try { bool res = PackageRepository.AddPackage(package); }
                 catch (Exception ex) { Console.WriteLine(ex.Message); }
 
                 string existingData = File.ReadAllText(packageDBPath);
@@ -184,15 +184,15 @@ namespace UnitTests
                 User receiver = new("Lukasss", "123123", "Lukas", "Reinhardt", "Johann");
                 List<Package> packages = new List<Package>();
 
-                try { DatabaseManager.AddUser(sender); }
+                try { UserRepository.AddUser(sender); }
                 catch (Exception ex) { Console.WriteLine(ex.Message); }
 
-                try { DatabaseManager.AddUser(receiver); }
+                try { UserRepository.AddUser(receiver); }
                 catch (Exception ex) { Console.WriteLine(ex.Message); }
 
-                Package package = new(Guid.NewGuid(), sender.login, receiver.login, "в дорозі", 0, 500, true, "Kharkiv", "Kyiv", 24);
+                Package package = new(Guid.NewGuid(), sender.login, receiver.login, PackageStatus.InTransit, 0, 500, true, "Kharkiv", "Kyiv", 24);
 
-                try { bool res = DatabaseManager.AddPackage(package); }
+                try { bool res = PackageRepository.AddPackage(package); }
                 catch (Exception ex) { Console.WriteLine(ex.Message); }
 
                 string existingData = File.ReadAllText(packageDBPath);
@@ -211,11 +211,11 @@ namespace UnitTests
             try
             {
                 Guid testId = Guid.NewGuid();
-                Package initial = new(testId, "Kein22", "Lukasss", "в дорозі", 12, 1450, false, "Kharkiv", "Lviv", 1);
-                DatabaseManager.AddPackage(initial);
+                Package initial = new(testId, "Kein22", "Lukasss", PackageStatus.InTransit, 12, 1450, false, "Kharkiv", "Lviv", 1);
+                PackageRepository.AddPackage(initial);
 
-                Package updated = new(testId, "Kein22", "Lukasss", "доставлено", 12, 1450, false, "Kharkiv", "Lviv", 1);
-                bool res = DatabaseManager.UpdatePackage(updated, testId);
+                Package updated = new(testId, "Kein22", "Lukasss", PackageStatus.Delivered, 12, 1450, false, "Kharkiv", "Lviv", 1);
+                bool res = PackageRepository.UpdatePackage(updated, testId);
             }
             finally { fileMutex.ReleaseMutex(); }
         }
@@ -233,7 +233,7 @@ namespace UnitTests
                 string existingData = File.ReadAllText(packageDBPath);
                 existPackages = JsonSerializer.Deserialize<List<Package>>(existingData) ?? new List<Package>();
 
-                List<Package> packages = DatabaseManager.GetPackagesByUser(userLogin);
+                List<Package> packages = PackageRepository.GetPackagesByUser(userLogin);
 
                 Assert.IsNotNull(packages);
             }
@@ -241,13 +241,13 @@ namespace UnitTests
         }
 
         [TestMethod]
-        public void databaseGetUserById()
+        public void databaseGetUserByLogin()
         {
             fileMutex.WaitOne();
 
             try
             {
-                User res = DatabaseManager.GetUserByLogin("Julian_123");
+                User? res = UserRepository.GetUserByLogin("Julian_123");
 
                 Assert.IsNotNull(res);
             }
@@ -278,9 +278,9 @@ namespace UnitTests
 
             try
             {
-                DatabaseManager.DelUser("PabloTax");
+                UserRepository.DelUser("PabloTax");
 
-                bool res = DatabaseManager.Register("PabloTax", "123123", "123123", "Pablo", "Morales", "Enriquez");
+                bool res = RegistrationService.Register("PabloTax", "123123", "123123", "Pablo", "Morales", "Enriquez");
 
                 Assert.IsTrue(res);
             }
@@ -294,7 +294,7 @@ namespace UnitTests
 
             try
             {
-                bool res = DatabaseManager.Register("PabloTax", "", "", "Pablo", "Morales", "Enriquez");
+                bool res = RegistrationService.Register("PabloTax", "", "", "Pablo", "Morales", "Enriquez");
 
                 Assert.IsFalse(res);
             }
@@ -308,7 +308,7 @@ namespace UnitTests
 
             try
             {
-                bool res = DatabaseManager.Register("PabloTax", null, null, "Pablo", "Morales", "Enriquez");
+                bool res = RegistrationService.Register("PabloTax", null, null, "Pablo", "Morales", "Enriquez");
 
                 Assert.IsFalse(res);
             }
@@ -322,7 +322,7 @@ namespace UnitTests
 
             try
             {
-                bool res = DatabaseManager.Register("PabloTax", "123", "123", "Pablo", "Morales", "Enriquez");
+                bool res = RegistrationService.Register("PabloTax", "123", "123", "Pablo", "Morales", "Enriquez");
 
                 Assert.IsFalse(res);
             }
@@ -336,7 +336,7 @@ namespace UnitTests
 
             try
             {
-                bool res = DatabaseManager.Login("PabloTax", "123123");
+                bool res = LoginService.Login("PabloTax", "123123");
 
                 Assert.IsTrue(res);
             }

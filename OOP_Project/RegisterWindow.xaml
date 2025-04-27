@@ -63,7 +63,7 @@
                     <TextBox x:Name="MiddleNameTextBox" Height="40" Style="{StaticResource TextBoxStyle}"/>
                 </StackPanel>
                 <StackPanel Grid.Row="12">
-                    <Button x:Name="RegisterButton" Grid.Row="6" Content="Реєстрація" Height="40" Style="{StaticResource DarkButton}"/>
+                    <Button x:Name="RegisterButton" Grid.Row="6" Content="Реєстрація" Height="40" Style="{StaticResource DarkButton}" Click="RegisterButton_Click"/>
                 </StackPanel>
             </Grid>
             <Button x:Name="BackButton" Style="{StaticResource BackButton}" Content="Назад" Tag="pack://application:,,,/Resources/back.png" Click="BackButton_Click" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="-80,0,0,0"/>

@@ -25,9 +25,9 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="1090"/>
             </Grid.RowDefinitions>
-            <Button x:Name="StatusPackageButton" Content="Статус посилки" Grid.Row="0" Width="280" Height="40" Style="{StaticResource ResourceKey=DarkButton}"/>
+            <Button x:Name="StatusPackageButton" Content="Статус посилки" Grid.Row="0" Width="280" Height="40" Style="{StaticResource ResourceKey=DarkButton}" Click="StatusPackageButton_Click"/>
             <Button x:Name="CreatePackageButton" Content="Відправити посилку" Grid.Row="1" Width="280" Height="40" Style="{StaticResource ResourceKey=DarkButton}" Click="CreatePackageButton_Click"/>
-            <Button x:Name="CreatePackageWithMoneyOrDocButton" Content="Відправити грощі/документи" Grid.Row="2" Width="280" Height="40" Style="{StaticResource ResourceKey=DarkButton}"/>
+            <Button x:Name="CreatePackageWithMoneyOrDocButton" Content="Відправити грощі/документи" Grid.Row="2" Width="280" Height="40" Style="{StaticResource ResourceKey=DarkButton}" Click="CreatePackageWithMoneyOrDocButton_Click"/>
             <Button x:Name="LeaveButton" Content="Вийти" Grid.Row="3" Width="280" Height="40" Style="{StaticResource ResourceKey=RedButton}" Click="LeaveButton_Click"/>
         </Grid>
         <Grid Grid.Column="1">
@@ -42,8 +42,7 @@
                                     <TextBlock Text="{Binding receiverCity}" FontWeight="Bold"/>
                                     <TextBlock Text="{Binding status}" Margin="0 5"/>
                                     <WrapPanel>
-                                        <Button Content="Редагувати" Margin="5,0"/>
-                                        <Button Content="Подробиці" Margin="5,0"/>
+                                        <Button x:Name="DetailButton" Content="Подробиці" Margin="5,0" FontSize="14" Width="80" Height="25" Style="{StaticResource DarkButton}" Click="DetailButton_Click" Tag="{Binding}"/>
                                     </WrapPanel>
                                 </StackPanel>
                             </Border>
