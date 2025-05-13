@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.Text.Json;
+using System.Windows;
 
 namespace OOP_Project
 {
@@ -75,6 +76,7 @@ namespace OOP_Project
             if (!File.Exists(packagePath)) return new List<Package>();
 
             string existingData = File.ReadAllText(packagePath);
+
             List<Package> packages = JsonSerializer.Deserialize<List<Package>>(existingData) ?? new List<Package>();
 
             Predicate<Package> predicate = p => p.senderLogin == userLogin || p.receiverLogin == userLogin;

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -101,6 +102,16 @@ namespace OOP_Project
             {
                 MessageBox.Show("Логін 'admin' зарезервовано для адміністратора");
                 LoginTextBox.BorderBrush = Brushes.Red;
+                return;
+            }
+
+            try
+            {
+                PackageRepository.GetPackagesByUser(LoginTextBox.Text);
+            }
+            catch (JsonException)
+            {
+                MessageBox.Show("Помилка при створенні користувача. Можливо він був видалений");
                 return;
             }
 

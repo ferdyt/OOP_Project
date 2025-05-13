@@ -75,6 +75,18 @@ namespace OOP_Project
                 userSender = _userRepository.GetUserByLogin(package.senderLogin);
                 userReceiver = _userRepository.GetUserByLogin(package.receiverLogin);
 
+                if (userReceiver == null)
+                {
+                    MessageBox.Show("Відправника не знайдено", "Помилка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
+                if (userSender == null)
+                {
+                    MessageBox.Show("Отримувача не знайдено", "Помилка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
                 MessageBoxResult result = MessageBox.Show(
                     $"Відправник: {userSender.Name} {userSender.MiddleName} {userSender.LastName}\n" +
                     $"Місто відправлення: {package.senderCity}\n" +

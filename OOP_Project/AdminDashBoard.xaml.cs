@@ -136,6 +136,12 @@ namespace OOP_Project
                     return;
                 }
 
+                if (package.status == PackageStatus.Canceled)
+                {
+                    MessageBox.Show("Посилка скасована", "Помилка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
                 package.status = PackageStatus.Delivered;
 
                 MessageBoxResult result = MessageBox.Show(

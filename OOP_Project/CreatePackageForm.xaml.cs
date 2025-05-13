@@ -22,6 +22,8 @@ namespace OOP_Project
     {
         private Frame _mainFrame;
         private UserRepository _userRepository = new UserRepository();
+        private float weight;
+        private Package package;
 
         public CreatePackageForm(Frame mainFrame, bool isMoneyOrDoc)
         {
@@ -53,18 +55,34 @@ namespace OOP_Project
 
         private void CreateButton_Click(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(ReceiverTextBox.Text) || string.IsNullOrEmpty(SenderCityTextBox.Text) ||
-                string.IsNullOrWhiteSpace(ReceiverCityTextBox.Text) || string.IsNullOrWhiteSpace(WeightTextBox.Text) ||
-                string.IsNullOrWhiteSpace(PriceTextBox.Text) || string.IsNullOrWhiteSpace(PostOfficeTextBox.Text))
+            if (IsMoneyOrDocCheckBox.IsChecked == true)
             {
-                MessageBox.Show("Заповніть всі поля!");
-                return;
+                if (string.IsNullOrWhiteSpace(ReceiverTextBox.Text) || string.IsNullOrEmpty(SenderCityTextBox.Text) ||
+                    string.IsNullOrWhiteSpace(ReceiverCityTextBox.Text) || string.IsNullOrWhiteSpace(PriceTextBox.Text) ||
+                    string.IsNullOrWhiteSpace(PostOfficeTextBox.Text))
+                {
+                    MessageBox.Show("Заповніть всі поля!");
+                    return;
+                }
+            }
+            else
+            {
+                if (string.IsNullOrWhiteSpace(ReceiverTextBox.Text) || string.IsNullOrEmpty(SenderCityTextBox.Text) ||
+                    string.IsNullOrWhiteSpace(ReceiverCityTextBox.Text) || string.IsNullOrWhiteSpace(WeightTextBox.Text) ||
+                    string.IsNullOrWhiteSpace(PriceTextBox.Text) || string.IsNullOrWhiteSpace(PostOfficeTextBox.Text))
+                {
+                    MessageBox.Show("Заповніть всі поля!");
+                    return;
+                }
             }
 
-            if (!double.TryParse(WeightTextBox.Text, out double weight) || weight <= 0)
+            if (IsMoneyOrDocCheckBox.IsChecked == false)
             {
-                MessageBox.Show("Введіть коректну вагу!");
-                return;
+                if (!double.TryParse(WeightTextBox.Text, out double weight) || weight <= 0)
+                {
+                    MessageBox.Show("Введіть коректну вагу!");
+                    return;
+                }
             }
 
             if (!int.TryParse(PriceTextBox.Text, out int price) || price <= 0)
@@ -93,7 +111,21 @@ namespace OOP_Project
                 return;
             }
 
-            Package package = new Package(
+            if (ReceiverCityTextBox.Text.Any(char.IsDigit) || SenderCityTextBox.Text.Any(char.IsDigit))
+            {
+                MessageBox.Show("Місто не може містити цифри!");
+                return;
+            }
+
+            if (ReceiverCityTextBox.Text.Length <= 2 || SenderCityTextBox.Text.Length <= 2)
+            {
+                MessageBox.Show("Місто повинно містити більше 2 символів!");
+                return;
+            }
+
+            if (IsMoneyOrDocCheckBox.IsChecked == false)
+            {
+                package = new Package(
                 Guid.NewGuid(),
                 UserRepository.GetSeance(),
                 ReceiverTextBox.Text,
@@ -105,6 +137,22 @@ namespace OOP_Project
                 ReceiverCityTextBox.Text,
                 postOffice
                 );
+            }
+            else
+            {
+                package = new Package(
+                Guid.NewGuid(),
+                UserRepository.GetSeance(),
+                ReceiverTextBox.Text,
+                PackageStatus.InTransit,
+                0,
+                price,
+                (bool)IsMoneyOrDocCheckBox.IsChecked,
+                SenderCityTextBox.Text,
+                ReceiverCityTextBox.Text,
+                postOffice
+                );
+            }
 
             PackageRepository.AddPackage(package);
             _mainFrame.Navigate(new UserDashboard(UserRepository.GetSeance(), _mainFrame));
