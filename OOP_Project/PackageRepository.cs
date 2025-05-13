@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
-using System.IO.Packaging;
+﻿using System.IO;
 using System.Text.Json;
 
 namespace OOP_Project
@@ -49,8 +43,11 @@ namespace OOP_Project
                 }
             }
 
-            User? sender = users.Find(u => u.login == package.senderLogin);
-            User? receiver = users.Find(u => u.login == package.receiverLogin);
+            Predicate<User> senderPredicate = u => u.login == package.senderLogin;
+            User? sender = users.Find(senderPredicate);
+
+            Predicate<User> receiverPredicate = u => u.login == package.receiverLogin;
+            User? receiver = users.Find(receiverPredicate);
 
             if (sender == null || receiver == null)
             {
@@ -80,7 +77,8 @@ namespace OOP_Project
             string existingData = File.ReadAllText(packagePath);
             List<Package> packages = JsonSerializer.Deserialize<List<Package>>(existingData) ?? new List<Package>();
 
-            List<Package> result = packages.FindAll(p => p.senderLogin == userLogin || p.receiverLogin == userLogin);
+            Predicate<Package> predicate = p => p.senderLogin == userLogin || p.receiverLogin == userLogin;
+            List<Package> result = packages.FindAll(predicate);
 
             return result;
         }
@@ -93,7 +91,8 @@ namespace OOP_Project
             string existingData = File.ReadAllText(packagePath);
             List<Package> packages = JsonSerializer.Deserialize<List<Package>>(existingData) ?? new List<Package>();
 
-            int removedCount = packages.RemoveAll(p => p.id == id);
+            Predicate<Package> predicate = p => p.id == id;
+            int removedCount = packages.RemoveAll(predicate);
 
             if (removedCount == 0)
                 return false;
@@ -117,15 +116,18 @@ namespace OOP_Project
             return packages;
         }
 
-        public static Package GetPackageById(Guid id)
+        public static Package? GetPackageById(Guid id)
         {
             if (!File.Exists(packagePath))
                 return null;
 
             string existingData = File.ReadAllText(packagePath);
             List<Package> packages = JsonSerializer.Deserialize<List<Package>>(existingData) ?? new List<Package>();
+            
+            Func<Package, bool> predicate = p => p.id == id;
+            var package = packages.FirstOrDefault(predicate);
 
-            return packages.FirstOrDefault(p => p.id == id);
+            return package;
         }
     }
 }

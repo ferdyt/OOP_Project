@@ -111,20 +111,6 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        <Style x:Key="BorderStatus" TargetType="Border">
-            <Setter Property="BorderBrush" Value="Gray"/>
-            <Style.Triggers>
-                <DataTrigger Binding="{Binding status}" Value="У відділенні">
-                    <Setter Property="BorderBrush" Value="Green"/>
-                </DataTrigger>
-                <DataTrigger Binding="{Binding status}" Value="Скасовано">
-                    <Setter Property="BorderBrush" Value="Red"/>
-                </DataTrigger>
-                <DataTrigger Binding="{Binding status}" Value="В дорозі">
-                    <Setter Property="BorderBrush" Value="Black"/>
-                </DataTrigger>
-            </Style.Triggers>
-        </Style>
         <Style x:Key="CustomRadioButton" TargetType="RadioButton">
             <Setter Property="Foreground" Value="Black"/>
             <Setter Property="FontSize" Value="16"/>
@@ -156,6 +142,20 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
+        </Style>
+        <Style x:Key="BorderStyle" TargetType="Border">
+            <Setter Property="BorderBrush" Value="Gray"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding status}" Value="InTransit">
+                    <Setter Property="BorderBrush" Value="Black"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding status}" Value="Delivered">
+                    <Setter Property="BorderBrush" Value="#FF00DA15"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding status}" Value="Canceled">
+                    <Setter Property="BorderBrush" Value="Red"/>
+                </DataTrigger>
+            </Style.Triggers>
         </Style>
     </Application.Resources>
 </Application>

@@ -13,6 +13,7 @@ namespace OOP_Project
     {
         public ObservableCollection<Package> Packages { get; set; }
         private Frame _mainFrame;
+        private UserRepository _userRepository = new UserRepository();
 
         private string seance;
 
@@ -67,12 +68,12 @@ namespace OOP_Project
             User? userSender;
             User? userReceiver;
 
-            Button button = sender as Button;
+            Button? button = sender as Button;
 
             if (button != null && button.Tag is Package package)
             {
-                userSender = UserRepository.GetUserByLogin(package.senderLogin);
-                userReceiver = UserRepository.GetUserByLogin(package.receiverLogin);
+                userSender = _userRepository.GetUserByLogin(package.senderLogin);
+                userReceiver = _userRepository.GetUserByLogin(package.receiverLogin);
 
                 MessageBoxResult result = MessageBox.Show(
                     $"Відправник: {userSender.Name} {userSender.MiddleName} {userSender.LastName}\n" +

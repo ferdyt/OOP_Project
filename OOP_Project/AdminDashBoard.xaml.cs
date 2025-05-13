@@ -22,11 +22,12 @@ namespace OOP_Project
     public partial class AdminDashBoard : Page
     {
         private Frame _mainFrame;
+        private UserRepository _userRepository = new UserRepository();
 
         public AdminDashBoard(Frame mainFrame)
         {
             InitializeComponent();
-            UsersList.ItemsSource = UserRepository.GetUsers();
+            UsersList.ItemsSource = _userRepository.GetUsers();
             OrdersList.ItemsSource = PackageRepository.GetPackages();
             _mainFrame = mainFrame;
         }
@@ -39,7 +40,7 @@ namespace OOP_Project
 
         private void UsersDetailsButton_Click(object sender, RoutedEventArgs e)
         {
-            Button button = sender as Button;
+            Button? button = sender as Button;
 
             if (button != null && button.Tag is User user)
             {
@@ -59,17 +60,25 @@ namespace OOP_Project
             User? userSender;
             User? userReceiver;
 
-            Button button = sender as Button;
+            Button? button = sender as Button;
 
             if (button != null && button.Tag is Package package)
             {
-                userSender = UserRepository.GetUserByLogin(package.senderLogin);
-                userReceiver = UserRepository.GetUserByLogin(package.receiverLogin);
+                userSender = _userRepository.GetUserByLogin(package.senderLogin);
+                userReceiver = _userRepository.GetUserByLogin(package.receiverLogin);
+
+                if (userSender == null || userReceiver == null)
+                {
+                    MessageBox.Show("Користувач не знайдений", "Помилка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
 
                 MessageBoxResult result = MessageBox.Show(
                     $"Відправник: {userSender.Name} {userSender.MiddleName} {userSender.LastName}\n" +
+                    $"Логін відправника: {userSender.login}\n" +
                     $"Місто відправлення: {package.senderCity}\n" +
                     $"Отримувач: {userReceiver.Name} {userReceiver.MiddleName} {userReceiver.LastName}\n" +
+                    $"Логін отримувача: {userReceiver.login}\n" +
                     $"Місто отримання: {package.receiverCity}\n" +
                     $"Статус: {package.status}\n" +
                     $"Вага: {package.weight} кг\n" +
@@ -84,10 +93,22 @@ namespace OOP_Project
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
-            Button button = sender as Button;
+            Button? button = sender as Button;
 
             if (button != null && button.Tag is Package package)
             {
+                if (package.status == PackageStatus.Canceled)
+                {
+                    MessageBox.Show("Посилка вже скасована", "Помилка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
+                if (package.status == PackageStatus.Delivered)
+                {
+                    MessageBox.Show("Посилка вже доставлена", "Помилка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
                 package.status = PackageStatus.Canceled;
 
                 MessageBoxResult result = MessageBox.Show(
@@ -105,10 +126,16 @@ namespace OOP_Project
 
         private void DeliverButton_Click(object sender, RoutedEventArgs e)
         {
-            Button button = sender as Button;
+            Button? button = sender as Button;
 
             if (button != null && button.Tag is Package package)
             {
+                if (package.status == PackageStatus.Delivered)
+                {
+                    MessageBox.Show("Посилка вже доставлена", "Помилка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
                 package.status = PackageStatus.Delivered;
 
                 MessageBoxResult result = MessageBox.Show(
@@ -120,6 +147,25 @@ namespace OOP_Project
                 {
                     PackageRepository.UpdatePackage(package, package.id);
                     OrdersList.ItemsSource = PackageRepository.GetPackages();
+                }
+            }
+        }
+
+        private void DeleteUserButton_Click(object sender, RoutedEventArgs e)
+        {
+            Button? button = sender as Button;
+
+            if (button != null && button.Tag is User user)
+            {
+                MessageBoxResult result = MessageBox.Show(
+                    $"Ви впевнені, що хочете видалити користувача: {user.login}?",
+                    "Підтвердження",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Warning);
+                if (result == MessageBoxResult.Yes)
+                {
+                    _userRepository.DelUser(user.login);
+                    UsersList.ItemsSource = _userRepository.GetUsers();
                 }
             }
         }

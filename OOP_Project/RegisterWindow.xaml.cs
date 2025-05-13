@@ -23,6 +23,7 @@ namespace OOP_Project
     {
         private Frame _mainFrame;
         SolidColorBrush gray = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#D9D9D9"));
+        private UserRepository _userRepository = new UserRepository();
 
         public RegisterWindow(Frame mainFrame)
         {
@@ -70,7 +71,7 @@ namespace OOP_Project
                 return;
             }
 
-            User? user = UserRepository.GetUserByLogin(LoginTextBox.Text);
+            User? user = _userRepository.GetUserByLogin(LoginTextBox.Text);
 
             if (user != null)
             {
@@ -105,7 +106,7 @@ namespace OOP_Project
 
             newUser = new User(LoginTextBox.Text, PasswordTextBox.Password, NameTextBox.Text, LastNameTextBox.Text, MiddleNameTextBox.Text);
 
-            UserRepository.AddUser(newUser);
+            _userRepository.AddUser(newUser);
 
             var userDashboardPage = new UserDashboard(newUser.login, _mainFrame);
             _mainFrame.Navigate(userDashboardPage);

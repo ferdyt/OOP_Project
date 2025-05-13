@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace OOP_Project
 {
-    public class UserRepository : IUserRepository
+    public class UserRepository : UserRepositoryBase
     {
         public static string userPath = "C:/Users/Csgo2/source/repos/OOP_Project/OOP_Project/Databases/UserDB.json";
 
@@ -29,15 +29,16 @@ namespace OOP_Project
             return JsonSerializer.Deserialize<string>(seance);
         }
 
-        public static bool DelUser(string login)
+        public override bool DelUser(string login)
         {
-
             if (!File.Exists(userPath)) return false;
 
             string existingData = File.ReadAllText(userPath);
             List<User> users = JsonSerializer.Deserialize<List<User>>(existingData) ?? new List<User>();
 
-            var userToRemove = users.Find(u => u.login == login);
+            Predicate<User> predicate = u => u.login == login;
+            var userToRemove = users.Find(predicate);
+
             if (userToRemove == null) return false;
 
             users.Remove(userToRemove);
@@ -48,7 +49,7 @@ namespace OOP_Project
             return true;
         }
 
-        public static bool AddUser(User user)
+        public override bool AddUser(User user)
         {
             List<User> users = new List<User>();
 
@@ -95,7 +96,7 @@ namespace OOP_Project
             return true;
         }
 
-        public static User? GetUserByLogin(string login)
+        public override User? GetUserByLogin(string login)
         {
             string existingUsers = File.ReadAllText(userPath);
             List<User> users = new List<User>();
@@ -105,12 +106,13 @@ namespace OOP_Project
                 users = JsonSerializer.Deserialize<List<User>>(existingUsers) ?? new List<User>();
             }
 
-            var user = users.FirstOrDefault(u => u.login == login);
+            Func<User, bool> predicate = u => u.login == login;
+            var user = users.FirstOrDefault(predicate);
 
             return user;
         }
 
-        public static List<User> GetUsers()
+        public override List<User> GetUsers()
         {
             var users = new List<User>();
 

@@ -1,138 +1,139 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
   <Class Name="OOP_Project.AdminDashBoard">
-    <Position X="10.5" Y="1.75" Width="1.5" />
+    <Position X="2.75" Y="1" Width="2.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>ABAAAAAAAACACAIgAgAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>AdminDashBoard.xaml.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
+  <Class Name="OOP_Project.App">
+    <Position X="3" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>App.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
   <Class Name="OOP_Project.AuthForm">
-    <Position X="2.75" Y="5.25" Width="1.5" />
+    <Position X="0.5" Y="0.75" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAACAQAAAAAAAAAAgQAEAAAACAACAAAAAAAA=</HashCode>
       <FileName>AuthForm.xaml.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.25" />
-  </Class>
-  <Class Name="OOP_Project.BaseDialogWindow">
-    <Position X="6.25" Y="5.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAACAAAA=</HashCode>
-      <FileName>BaseDialogWindow.cs</FileName>
-    </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="OOP_Project.BaseWindow">
-    <Position X="4.5" Y="5.25" Width="1.5" />
+  <Class Name="OOP_Project.CountToVisibilityConverter">
+    <Position X="2.75" Y="4" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAACAAAA=</HashCode>
-      <FileName>BaseWindow.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" />
-  </Class>
-  <Class Name="OOP_Project.InfoPackageDialog">
-    <Position X="7" Y="2.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAACAAAA=</HashCode>
-      <FileName>InfoPackageDialog.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="OOP_Project.InfoUserDialog">
-    <Position X="5.25" Y="2.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAACAAAA=</HashCode>
-      <FileName>InfoUserDialog.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="OOP_Project.Package">
-    <Position X="3.25" Y="2" Width="1.75" />
-    <TypeIdentifier>
-      <HashCode>AAYwAAAAAAAQAAAAAAAAQAAAAAAQAABgAAAAAAAAAgA=</HashCode>
-      <FileName>Package.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="OOP_Project.User">
-    <Position X="3.25" Y="0.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAQAAQAAAAAAAAEIAAAAgAAEAg=</HashCode>
-      <FileName>User.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="OOP_Project.UserDashBoard">
-    <Position X="10.5" Y="0.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>UserDashBoard.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="OOP_Project.DatabaseManager">
-    <Position X="10.5" Y="3.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>IAAAAAAAAQAgAAAAAAAAEAAAAIABAAAgAAAQCAEAAAA=</HashCode>
-      <FileName>DatabaseManager.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" />
-  </Class>
-  <Class Name="OOP_Project.EditPackageForm">
-    <Position X="8.75" Y="0.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>EditPackageForm.xaml.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" />
-  </Class>
-  <Class Name="OOP_Project.RegisterForm">
-    <Position X="6.5" Y="1.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAA=</HashCode>
-      <FileName>RegisterForm.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="OOP_Project.TrackingForm">
-    <Position X="8" Y="5.25" Width="2" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAACAACAAAAAAAAAAQAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>TrackingForm.xaml.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CountVisibilityConverter.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="OOP_Project.CreatePackageForm">
-    <Position X="8.75" Y="3" Width="1.5" />
+    <Position X="12.75" Y="2.5" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAECAAAAA=</HashCode>
       <FileName>CreatePackageForm.xaml.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Interface Name="OOP_Project.IAuthenticable">
-    <Position X="0.5" Y="0.5" Width="1.5" />
+  <Class Name="OOP_Project.LoginService">
+    <Position X="4" Y="7" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAA=</HashCode>
-      <FileName>IAuthenticable.cs</FileName>
+      <FileName>LoginService.cs</FileName>
     </TypeIdentifier>
-  </Interface>
+  </Class>
+  <Class Name="OOP_Project.MainWindow">
+    <Position X="0.5" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MainWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="OOP_Project.Package">
+    <Position X="5.25" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAYwAAAAAAAQAAAAAAAAQAAAAAAQAABgAAAAAAAAAgA=</HashCode>
+      <FileName>Package.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OOP_Project.PackageRepository">
+    <Position X="9.25" Y="4.75" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAAAAAAAAAAAAAAEAAAAIAAAAAAAAAQCAEAAAA=</HashCode>
+      <FileName>PackageRepository.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="OOP_Project.RegisterWindow">
+    <Position X="6.75" Y="4.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAQAAAAAAAAAAgAAAAAAAAAAAAACAAAAA=</HashCode>
+      <FileName>RegisterWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="OOP_Project.RegistrationService">
+    <Position X="2.25" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>RegistrationService.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OOP_Project.TrackingForm">
+    <Position X="12.75" Y="5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAACAACAAAAAAAAAAQAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>TrackingForm.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="OOP_Project.User">
+    <Position X="0.5" Y="3.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAQAAQAAAAAAAAEIAAAAgAAEAg=</HashCode>
+      <FileName>User.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OOP_Project.UserDashboard">
+    <Position X="7.25" Y="0.5" Width="3.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAAIAgAAAAAgAAAAAAACCCAAAAAAAACAA=</HashCode>
+      <FileName>UserDashboard.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="OOP_Project.UserRepository">
+    <Position X="4.75" Y="4" Width="2" />
+    <TypeIdentifier>
+      <HashCode>KAAAAAAAAQAgAAAAAEAAEAAAAAAAAAAgAAAAAAAAAAA=</HashCode>
+      <FileName>UserRepository.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OOP_Project.UserRepositoryBase">
+    <Position X="11" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAQAgAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAA=</HashCode>
+      <FileName>UserRepositoryBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
   <Interface Name="OOP_Project.IPackageRepository">
-    <Position X="0.5" Y="1.75" Width="2.5" />
+    <Position X="11" Y="0.5" Width="2.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAEAAAAIAAAAAAAAAQCAAAAAA=</HashCode>
       <FileName>IPackageRepository.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="OOP_Project.IUserRepository">
-    <Position X="0.5" Y="3.5" Width="2" />
+  <Enum Name="PackageStatus">
+    <Position X="13.75" Y="0.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>IAAAAAAAAQAgAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAA=</HashCode>
-      <FileName>IUserRepository.cs</FileName>
+      <HashCode>AAAAAAAAABAAAAAAgAAAAAAAAAIAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>PackageStatus.cs</FileName>
     </TypeIdentifier>
-  </Interface>
-  <Interface Name="OOP_Project.IWindow">
-    <Position X="0.5" Y="5.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAACAAAA=</HashCode>
-      <FileName>IWindow.cs</FileName>
-    </TypeIdentifier>
-  </Interface>
+  </Enum>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

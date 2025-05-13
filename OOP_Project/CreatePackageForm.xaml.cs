@@ -21,6 +21,7 @@ namespace OOP_Project
     public partial class CreatePackageForm : Page
     {
         private Frame _mainFrame;
+        private UserRepository _userRepository = new UserRepository();
 
         public CreatePackageForm(Frame mainFrame, bool isMoneyOrDoc)
         {
@@ -72,7 +73,7 @@ namespace OOP_Project
                 return;
             }
 
-            User? user = UserRepository.GetUserByLogin(ReceiverTextBox.Text);
+            User? user = _userRepository.GetUserByLogin(ReceiverTextBox.Text);
 
             if (user == null)
             {
