@@ -11,13 +11,8 @@ namespace OOP_Project
             List<Package> packages = new List<Package>();
             List<User> users = new List<User>();
 
-            if (package == null) return false;
-
-            if (package.isDockument && package.weight > 0.1) return false;
-
-            if (package.senderCity.Length < 2 || package.receiverCity.Length < 2 || string.IsNullOrWhiteSpace(package.senderCity) || string.IsNullOrWhiteSpace(package.receiverCity)) return false;
-
-            if (package.postOffice <= 0) return true;
+            if (!PackageValidator.Validate(package))
+                return false;
 
             if (File.Exists(Path.packagePath))
             {
