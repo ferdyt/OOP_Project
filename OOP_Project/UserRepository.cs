@@ -10,30 +10,28 @@ namespace OOP_Project
 {
     public class UserRepository : UserRepositoryBase
     {
-        public static string userPath = "C:/Users/Csgo2/source/repos/OOP_Project/OOP_Project/Databases/UserDB.json";
-
         public static void WriteSeance(string userLogin)
         {
             string seance = JsonSerializer.Serialize(userLogin);
-            File.WriteAllText("C:/Users/Csgo2/Source/Repos/OOP_Project/OOP_Project/Databases/Current.json", seance);
+            File.WriteAllText(Path.currentPath, seance);
         }
 
         public static string? GetSeance()
         {
-            if (!File.Exists("C:/Users/Csgo2/Source/Repos/OOP_Project/OOP_Project/Databases/Current.json"))
+            if (!File.Exists(Path.currentPath))
             {
                 return null;
             }
 
-            string seance = File.ReadAllText("C:/Users/Csgo2/Source/Repos/OOP_Project/OOP_Project/Databases/Current.json");
+            string seance = File.ReadAllText(Path.currentPath);
             return JsonSerializer.Deserialize<string>(seance);
         }
 
         public override bool DelUser(string login)
         {
-            if (!File.Exists(userPath)) return false;
+            if (!File.Exists(Path.userPath)) return false;
 
-            string existingData = File.ReadAllText(userPath);
+            string existingData = File.ReadAllText(Path.userPath);
             List<User> users = JsonSerializer.Deserialize<List<User>>(existingData) ?? new List<User>();
 
             Predicate<User> predicate = u => u.login == login;
@@ -44,7 +42,7 @@ namespace OOP_Project
             users.Remove(userToRemove);
 
             string jsonString = JsonSerializer.Serialize(users, new JsonSerializerOptions { WriteIndented = true });
-            File.WriteAllText(userPath, jsonString);
+            File.WriteAllText(Path.userPath, jsonString);
 
             return true;
         }
@@ -58,9 +56,9 @@ namespace OOP_Project
             if (user.Name.Length < 2 || user.LastName.Length < 2 || user.MiddleName.Length < 2) return false;
             if (user.password.Length < 4 || string.IsNullOrWhiteSpace(user.password)) return false;
 
-            if (File.Exists(userPath))
+            if (File.Exists(Path.userPath))
             {
-                string existingData = File.ReadAllText(userPath);
+                string existingData = File.ReadAllText(Path.userPath);
                 if (!string.IsNullOrEmpty(existingData))
                 {
                     try
@@ -85,7 +83,7 @@ namespace OOP_Project
             try
             {
                 string jsonString = JsonSerializer.Serialize(users, new JsonSerializerOptions { WriteIndented = true });
-                File.WriteAllText(userPath, jsonString);
+                File.WriteAllText(Path.userPath, jsonString);
             }
             catch (Exception ex)
             {
@@ -98,7 +96,7 @@ namespace OOP_Project
 
         public override User? GetUserByLogin(string login)
         {
-            string existingUsers = File.ReadAllText(userPath);
+            string existingUsers = File.ReadAllText(Path.userPath);
             List<User> users = new List<User>();
 
             if (!string.IsNullOrEmpty(existingUsers))
@@ -116,9 +114,9 @@ namespace OOP_Project
         {
             var users = new List<User>();
 
-            if (!File.Exists(userPath)) return users;
+            if (!File.Exists(Path.userPath)) return users;
 
-            string existingData = File.ReadAllText(userPath);
+            string existingData = File.ReadAllText(Path.userPath);
             users = JsonSerializer.Deserialize<List<User>>(existingData) ?? new List<User>();
 
             return users;

@@ -15,7 +15,7 @@ namespace OOP_Project
             if (username == null || password == null)
                 return false;
 
-            string existingData = File.ReadAllText(UserRepository.userPath);
+            string existingData = File.ReadAllText(Path.userPath);
             List<User>? users = JsonSerializer.Deserialize<List<User>>(existingData);
 
             if (users == null)
